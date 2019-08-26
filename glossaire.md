@@ -41,9 +41,22 @@
 - **Langage** (de programmation) : Règles d'écriture permettant à une machine de traduire et d'exécuter des *instructions* écrites par un *programmeur* à son intention.
 - **Langage interprété** : Lors de l'*exécution* d'un programme écrit dans un *langage interprété*, le code écrit par le programmeur est transformé en *instructions* compréhensibles par la machine au travers d'un *interpréteur*. Cet *interpréteur* est un programme qui doit donc être installé sur la machine chargée de l'exécution du programme.
 - **Open Source** : Désigne les *logiciels* dont le *code source* est partagé et dont les licences permettent la modification ainsi que la distribution par des tiers.
+- **Règle métier** : Dans un *programme*, il s'agit de la partie responsable des traitements effectués sur les *données*. Exemple: le calcul de la *TVA* dans un logiciel de comptabilité.
 - **Stateless** : Un langage *sans état/stateless* ne conserve pas de données entre deux *exécutions* d'un même *programme*
 - **Syntaxe** : L'ensemble des mot-clés spécifiques à un *langage de programmation*.
 - **Typage dynamique** : Capacité d'un langage informatique d'évaluer, lors de l'*exécution*, le type de données stockées dans la *mémoire temporaire*.
+
+## Programmation Orientée Objet (POO)
+
+La *Programmation Orientée Objet* est un *paradigme* de programmation popularisé par le langage *Java*. Son objectif est de rendre le code plus modulable en l'agençant dans des *objets* qui surveillent leur propre *état* et sont chacun responsables de *fonctionnalités* spécifiques.
+
+- **Classe** : Définition de *propriétés* et de *méthodes*, groupée thématiquement, permettant la réutilisation de leur *code* à travers les *instances* de cette classe.
+- **Couplage** : Un *couplage fort* désigne des *classes* dont l'inter-relation ne permet pas à l'une de se passer de l'autre. A l'inverse d'un *couplage faible*.
+- **Design Pattern** (Patron de Conception) : Désigne une organisation du code selon certaines conventions, permettant d'améliorer la maintenabilité du code.
+- **Héritage** : Permet de créer une *classe enfant* (ou *sous-classe*) à partir d'une *classe parent* (ou *super-classe*) existante. La *classe enfant* peut donc utiliser le code contenu dans son *parent*.
+- **Instance / Objet** : Pour exécuter le code défini dans une *classe*, il est généralement nécessaire d'*instancier* cette classe. Chaque *instance* d'une même classe, bien que se comportant de façon similaire, n'est pas affectée par les modifications apportées aux autres instances.
+- **Référence** : Permet de retrouver une *instance* existante d'une *classe* gardée en *mémoire*.
+- **UML** (Unified Modeling Language) : Conventions de schématisation du code afin de communiquer aisément entre développeurs.
 
 
 ## Agilité & framework SCRUM
