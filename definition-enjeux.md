@@ -1,10 +1,10 @@
-# Définition du cadre et des enjeux du projet
+# Projet de fonctionnalité : l'export de traductions
 
 Le projet présenté est un module de l'application *Polylang*. Son but est de gérer l'import, comme l'export, de fichiers de traduction.
 
-Les données seront alors transformées de fichiers aux formats *XLIFF* ou *PO*, en entrées de base de données *MySQL*.
+Les données seront alors transformées de fichiers aux formats *XLIFF* ou *PO*, en entrées de base de données *MySQL*, et inversement.
 
-## Une première définition du besoin
+## Un besoin exprimé par les clients
 
 La définition originale du besoin a pris la forme d'une réunion d'une journée, regroupant les membres de l'équipe suivants:
 
@@ -16,7 +16,7 @@ Ce projet est à l'initiative de l'entreprise *WP Syntex*, après l'expression d
 
 Ce besoin est d'utiliser un format de **fichier d'échange**, afin d'externaliser les traductions depuis l'outil *WordPress* vers un outil de traduction tiers. (exemple: *Matecat*, *Virtaal*, etc.)
 
-## Enjeux du projet
+## Les enjeux du projet
 
 Lors de la présentation, Frédéric DEMARLE, en tant que chef de projet, a exposé l'intérêt du projet pour la société:
 
@@ -34,9 +34,9 @@ Au niveau technique :
 - Les **métadonnées** pouvant être associées à plusieurs contenus, elles ne doivent pas être traduites à nouveau à chaque traduction d'un de ces contenus.
 - Lors de l'import, des traductions pourraient entrer en conflit avec celles pré-existantes sur le **site** de l'utilisateur, il faudra trouver un moyen de gérer les ambiguïtés.
 - Les imports comme les exports devront prendre en compte la fonctionnalité de synchronisation, des **contenus** comme des **métadonnées**, existante au sein de l'application *Polylang*.
-- Le système de traduction des **chaînes de caractère** isolées diffère de celui des **contenus** de par leur modèle de **persistance** (stockées dans des *fichiers* et non en *base de données*).
+- Le système de traduction des **chaînes de caractère** isolées diffère de celui des *contenus* de par leur modèle de **persistance** (stockées dans des *fichiers* et non en *base de données*).
 
-## Organisation de l'équipe
+## Organiser la collaboration
 
 L'organisation et la communication au sein de l'équipe ont ensuite été abordées. Le défi ne porte ici pas tant sur la taille de l'équipe (quatre personnes) mais sur son éclatement, les membres étant tous en situation de télé-travail.
 
@@ -48,6 +48,8 @@ Ainsi, une partie de la réunion a porté sur le choix des outils de collaborati
 - *GitHub* : Outil de partage du **code source** et de la **documentation** technique.
 - *Trello* : Sa flexibilité nous permet de l'utiliser à la fois comme tableau de gestion des tâches et comme centre de partage de documentation.
 
+![Trello, dédié à la gestion des tâches.](../img/spec-010_trello.png)
+
 L'équipe a ensuite débattu sur des choix de gestion de projet inspiré de la méthode *SCRUM* ainsi que de la philosophie **agile**:
 
 - La rédaction des spécifications fonctionnelles sous forme d'**user stories**, permet le découpage et la répartition des tâches à réaliser au sein de l'équipe de développement.
@@ -56,7 +58,7 @@ L'équipe a ensuite débattu sur des choix de gestion de projet inspiré de la m
 - Une journée de **pair programming** toutes les deux semaines pour les développeurs, leur permettant de s'accorder sur la manière d'écrire le code ainsi que de connecter les travaux réalisés en autonomie.
 - Des **code reviews** régulières, permettant d'expliciter et de modifier le code selon les suggestions de l'équipe.
 
-## Environnement technique
+## Les contraintes techniques
 
 Le projet étant une nouvelle fonctionnalité pour l'extension *Polylang* du *CMS* *Wordpress*, certaines technologies étaient donc imposées:
 
@@ -71,7 +73,7 @@ D'autres ont été choisies par l'équipe:
 - **XLIFF** : Format de *fichiers* basé sur la *syntaxe* du format *XML*. C'est un format très couramment utilisé par les *TMS* (Translation Management System).
 - **Helpscout** : *Application* web de gestion des tickets de support, permet à l'équipe de suivre et résoudre les problèmes rencontrés par les utilisateurs.
 
-Finalement, les environnement de développement peuvent varier selon les développeurs:
+Finalement, les environnement de développement peuvent varier selon les développeurs. Le mien utilise les technologies suivantes:
 
 - **Linux** : *Système d'exploitation* *open source*. Il est aujourd'hui l'*OS* très largement majoritaire dans les *serveurs webs*.
 - **Apache (HTTP Server)** : *Logiciel* permettant l'interprétation de *requêtes HTTP* ainsi que la génération des *réponses*.
