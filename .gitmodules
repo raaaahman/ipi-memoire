@@ -1,0 +1,3 @@
+[submodule "ipi-memoire-images"]
+	path = img
+	url = git@github.com:raaaahman/ipi-memoire-images.git

@@ -7,7 +7,7 @@ Le panneau d'administration de *WordPress* permet aux utilisateurs de réaliser 
 - Il permet de traduire simultanément plusieurs *contenus multimédias, articles et contenus personnalisés*. Ces contenus sont alors copiés dans les traductions nouvellement créées.
 - Il permet de synchroniser les *articles ou types de contenus personnalisés* entre plusieurs langues. Cela peut servir par exemple à répercuter les changements entre deux langues extrêmement proches. Par exemple, l'Anglais américain et l'Anglais britannique.
 
-![L'action groupée de traduction](../img/bulk-refactor-000_edit-post.png)
+![L'action groupée de traduction](img/bulk-refactor-000_edit-post.png)
 
 Conformément à la philosophie générale de l'extension, la conception de ce module s'est voulue coller au plus près du fonctionnement de *WordPress*, réutilisant en grande partie le code existant. 
 
@@ -83,7 +83,7 @@ On souhaiterait à la place, pouvoir ajouter des *actions groupées* dans d'autr
 
 La *composition* consiste à inclure au sein d'une *classe*, une ou plusieurs *propriétés* étant elles-mêmes des *instances* d'autres *classes*. Par ce principe, on décide d'externaliser l'exécution de l'*action groupée* dans une nouvelle classe : `PLL_Bulk_Translate_Option`[^1].
 
-![PLL_Bulk_Translate se compose d'une ou plusieurs PLL_Bulk_Translate_Option](../img/bulk-refactor-001_composition.png)
+![PLL_Bulk_Translate se compose d'une ou plusieurs PLL_Bulk_Translate_Option](img/bulk-refactor-001_composition.png)
 
 Ainsi, `PLL_Bulk_Translate` contient une *tableau* d'instances de `PLL_Bulk_Translate_Option`, chacune représentant une des *actions groupées* suivantes:
 
@@ -94,13 +94,13 @@ Ainsi, `PLL_Bulk_Translate` contient une *tableau* d'instances de `PLL_Bulk_Tran
 
 La *classe* `PLL_Bulk_Translate` conserve les responsabilités de vérification des *paramètres* passés lors du déclenchement de l'*action groupée*, ainsi que de l'affichage du formulaire. Dans cette *classe composée*, on peut alors utiliser le principe de *délégation* pour donner la responsabilité de la traduction des *contenus* à la classe `PLL_Bulk_Translate_Option`.
 
-![La traduction des contenus est déléguée à la classe PLL_Bulk_Translate_option](../img/bulk-refactor-002_delegation.png.png)
+![La traduction des contenus est déléguée à la classe PLL_Bulk_Translate_option](img/bulk-refactor-002_delegation.png.png)
 
 Ainsi lorsque `PLL_Bulk_Translate` reçoit l'instruction d'exécuter une *action groupée*, la méthode `handle_bulk_action()` vérifie les *paramètres* de la requête, mais l'exécution en question de cette action est déléguée à la méthode `do_bulk_action()` d'une *instance* de la classe `PLL_Bulk_Translate_Option`. Cette *instance* a été préalablement assignée à la propriété `PLL_Bulk_Translate::$options`. C'est également la méthode `PLL_Bulk_Translate::handle_bulk_action()` qui se charge de comprendre quelle est l'*instance* de `PLL_Bulk_Translate_Option` correspondant à l'*action groupée* demandée.
 
 D'autre part, lorsque l'on affiche le formulaire servant à paramétrer l'*action groupée*, la méthode `PLL_Bulk_Translate::display_form()` va appeler chacune des `PLL_Bulk_Translate_Option` disponibles afin de pouvoir les afficher et de les rendre sélectionnables dans ce formulaire.
 
-![Chaque option disponible est affichée dans le formulaire](../img/bulk-refactor-005_display-form.png)
+![Chaque option disponible est affichée dans le formulaire](img/bulk-refactor-005_display-form.png)
 
 ### Le pattern "Strategy"
 
@@ -121,7 +121,7 @@ La *classe* `PLL_Bulk_Translate_Option` va donc elle même être composée afin 
 - `PLL_Bulk_Translate_Filter_Strategy` : Défini la méthode `filter` qui **vérifie** la pertinence d'exécuter l'action sur un *contenu*.
 - `PLL_Bulk_Translate_Translate_Strategy` : Défini la méthode `translate` qui **exécute** l'action sélectionnée sur un *contenu* à partir de son identifiant et de la langue vers laquelle on souhaite le dupliquer / synchroniser / exporter / etc.
 
-![La classe PLL_Bulk_Translate_Option se compose de deux stratégies](../img/bulk-refactor-003_strategy.png)
+![La classe PLL_Bulk_Translate_Option se compose de deux stratégies](img/bulk-refactor-003_strategy.png)
 
 
 Toutes les *classes* implémentant ces *interfaces* seront donc assignables par notre classe `PLL_Bulk_Translate_Option`. L' **itération** sur les *contenus* à traduire va donc être exécuté par cette classe.  A l'intérieur de cette *boucle*, les étapes de **vérification** et d'**exécution** seront déléguées aux classes composantes.
@@ -150,7 +150,7 @@ Toutes les *classes* implémentant ces *interfaces* seront donc assignables par 
 
 Pour permettre aux différents modules de *Polylang* de s'interfacer avec, et d'utiliser ce mécanisme de traduction en masse, ils faut que ceux-ci puissent récupérer une *référence* à la classe `PLL_Bulk_Translate`. Plutôt que d'en créer une *instance* systématiquement et de chercher comment la récupérer, j'ai préféré *instancier* cette classe uniquement lorsque des actions de traductions groupées sont disponibles.
 
-![Les modules peuvent passer des instances de PLL_Bulk_Translate_Option à la classe PLL_Bulk_Translate](../img/bulk-refactor-004_dependency-inversion.png)
+![Les modules peuvent passer des instances de PLL_Bulk_Translate_Option à la classe PLL_Bulk_Translate](img/bulk-refactor-004_dependency-inversion.png)
 
 L'enjeu est de n'avoir qu'une seule *instance* de la classe *PLL_Bulk_Translate* (ou aucune), contenant autant de `PLL_Bulk_Translate_Option` que le contexte requiert. C'est cette même instance qui doit être appelée depuis chaque module de *Polylang*. On se penche donc sur le *design pattern* "Singleton".
 

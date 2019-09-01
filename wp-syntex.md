@@ -28,7 +28,7 @@ L'activité de l'entreprise se concentre sur l'évolution, la maintenance et l'a
 
 *Polylang* est une extension pour *WordPress*, le *CMS* *open source* le plus utilisé sur internet. *Polylang* ajoute à *WordPress* la possibilité de gérer des contenus en plusieurs langues sur un même site, ou plusieurs dans une configuration multi-site de *WordPress*. Cette extension existe en version gratuite, mais également en version *premium*. 
 
-![Page de présentation de l'extension Polylang sur le site wordpress.org](../img/wp-syntex-005_polylang.png)
+![Page de présentation de l'extension Polylang sur le site wordpress.org](img/wp-syntex-005_polylang.png)
 
 Une seconde extension, *Polylang for WooCommerce*, vient étendre ses possibilités lorsqu'elle est combinée à l'extension *WooCommerce*, permettant la gestion de sites *e-commerce*.
 
