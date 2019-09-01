@@ -24,7 +24,7 @@ Pour ce module, une seule classe est responsable de l'ensemble des fonctionnalit
 - `handle_bulk_action` : Vérifie la validité des *paramètres* récupérés, puis invoque la méthode suivante :
 - `translate` : Exécute l'*action groupée* pour les *contenus* sélectionnés pour la traduction.
 - `display_form` : Affiche le formulaire pour paramétrer l'*action groupée*.
-- `admin_notices` : Affiche les notifications pour informer l'utilisateur du résultat de l'*action groupée*
+- `admin_notices` : Affiche les notifications pour informer l'utilisateur du résultat de l'*action groupée*.
 
 Dans cette classe, c'est la méthode `translate()` qui a la charge d'exécuter les *règles métier*, utilisant des *conditions* pour trouver la règle adaptée à la situation. L'exemple ci-dessous montre le code qui effectue la traduction d'un contenu de type *article* (post).
 
