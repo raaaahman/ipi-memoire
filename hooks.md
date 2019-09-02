@@ -4,11 +4,11 @@
 
 Ces extensions peuvent être de toutes sortes, comme la gestion de cache, l'amélioration du moteur de recherche interne ou la transformation en plateforme de e-commerce. *Polylang* fait partie des extensions très installées, et s'est construite sur la base des fonctionnalités offertes par *WordPress*.
 
-Pour développer notre projet, nous avons choisi de le réaliser sous forme d'*extension* complémentaire à *Polylang*. Si cette dernière est nécessaire pour faire tourner notre programme, les *codes source* des deux *extensions* seront distincts. Cette façon de procéder est courante dans la communauté *WordPress* et qualifiée sous le terme d'**add-on**.
+Pour développer notre projet, nous avons choisi de le réaliser sous forme d'*extension* complémentaire à *Polylang*. Si cette dernière est nécessaire pour faire tourner notre programme, les *codes source* des deux extensions sont distincts. Cette façon de procéder est courante dans la communauté *WordPress* et qualifiée sous le terme d'**add-on**.
 
 ## Une architecture orientée événement
 
-Pour permettre aux extensions de s'interfacer, *WordPress* offre des points d'accroche : les **hooks**. Ces *hooks* sont présents en plusieurs endroits du programme. Lors de l'exécution, chaque fois que le programme passe par un *hook*, il interrompt le cours de son exécution, vérifie si des actions ont été enregistrées sur ce *hook*, les exécute une par une, puis reprend le cours de son exécution, jusqu'à un prochain *hook* et ainsi de suite...
+Pour permettre aux extensions de s'interfacer, *WordPress* offre des points d'accroche : les **hooks**. Ces *hooks* sont présents en plusieurs endroits du programme. Chaque fois que le programme passe par un *hook*, il interrompt le cours de son exécution, vérifie si des actions ont été enregistrées sur ce *hook*, les exécute une par une, puis reprend le cours de son exécution, jusqu'à un prochain *hook* et ainsi de suite...
 
 ![Toutes les actions sont exécutées séquentiellement.](ipi-memoire-images/hooks-001_action_flowchart.png)
 
@@ -17,7 +17,7 @@ Ce fonctionnement peut être rapproché de l'*architecture orientée événement
 *WordPress* différencie deux types de *hook* : les **actions** et les **filtres**. Ils partagent les mêmes propriétés :
 
 - `$tag` : Le nom du filtre, exemple: `'plugins_loaded'`
-- `$function_to_add` : Une fonction ou une méthode qui sera appelée lorsque l'événement est déclenché.
+- `$function_to_add` : Une *fonction* ou une *méthode* qui sera appelée lorsque l'événement est déclenché.
 - `$priority` : La priorité si plusieurs *actions* s'accrochent sur le même événement. Plus elle est basse, plus tôt l'*action* sera exécutée.
 - `$accepted_args` : Le nombre d'arguments à passer à la fonction exécutée.
 
@@ -25,23 +25,15 @@ Ce qui les différencie est dans leur utilisation par *WordPress* : un *filtre* 
 
 ## Initialisation de l'extension
 
-Par exemple, dans le script [wp-settings.php](https://github.com/WordPress/WordPress/blob/7f7480cb2a4f9befefeec767b6d99df19e901233/wp-settings.php#L391) on trouve l'*action* suivante :
+A chaque initialisation, *WordPress* cherche dans son sous-dossier `wp-content/plugins` tous les fichiers PHP contenant les *commentaires* conventionnels de description d'extension (nom de l'extension, auteur, dépôt en ligne, etc.), pour charger ces fichiers en tant qu'extensions et en exécuter le code. Une fois fait, il déclenche l'*action* suivante :
+
+[developer.wordpress.org/reference/hooks/plugins_loaded/](https://developer.wordpress.org/reference/hooks/plugins_loaded/)
 
 	do_action( 'plugins_loaded' );
 
-Cette *action* est déclenchée après que *WordPress* aie chargé tous les fichiers des *extensions* installées. Cela permet aux auteurs d'extensions de reporter l'exécution de leur code, afin d'attendre d'être sûr que l'intégralité de leur extension est chargée, et ainsi de ne pas provoquer d'erreur fatale. 
+Cette *action* est déclenchée après que l'**intégralité** des fichiers des *extensions* aient été chargés en mémoire. Cela permet aux auteurs d'extensions de reporter l'exécution de leur code, afin d'attendre d'être sûr que l'intégralité de leur extension est chargée, et ainsi de ne pas provoquer d'erreur fatale. 
 
-On trouve un exemple de filtre dans la classe [WP_List_Table](https://github.com/WordPress/WordPress/blob/77a31e6875ebc31396b70f6bd2682738ab6290b6/wp-admin/includes/class-wp-list-table.php#L454) :
-
-	protected function bulk_actions( $which = '' ) {
-		// ...
-		$this->_actions = apply_filters( "bulk_actions-{$this->screen->id}", $this->_actions );  			
-		// ...
-	}
-
-Dans ce code, au moment de l'exécution de la méthode `bulk_actions`, tous les *filtres* enregistrés vont tour à tour, recevoir un tableau de valeur qu'ils vont pouvoir modifier, puis renvoyer. Ce tableau sera ensuite réassigné à la propriété `_actions` de la *classe* `WP_List_Table`.
-
-L'événement `'plugins_loaded'` est déclenché lorsque tous les fichiers *extensions* ont été chargés par *WordPress*.
+Dans notre cas, un fichier nommé `xliff-exporter.php` contient la description de notre extension et nous sert donc de **point d'entrée**. Comme l'on ne peut pas être certain que le fichier contenant notre classe `PLL_Bulk_Translate` ait été chargé avant l'exécution du code contenu dans le fichier `xliff-exporter.php`, on a choisi d'attendre que l'événement *plugins_loaded* soit déclenché pour continuer l'exécution de notre code.
 
 	add_action( 'plugins_loaded', 'add_bulk_export' );
 	/**
@@ -56,34 +48,36 @@ L'événement `'plugins_loaded'` est déclenché lorsque tous les fichiers *exte
 		);
 	}
 
----
+## Agir sur le panneau d'administration
 
-## L'interface d'administration
-
-Accéder au panneau d'administration *WordPress* déclenche l'événement `'current_screen'`. Celui-ci permet de récupérer en paramètre un objet *Wp_Screen* contenant les informations sur la page actuelle: 
+Accéder au panneau d'administration de *WordPress* déclenche l'action `'current_screen'`. Cette action passe une valeur en *paramètre* aux fonctions ou méthodes qui seront appelées.
   
-[developer.wordpress.org/reference/hooks/current_screen/](https://developer.wordpress.org/reference/hooks/current_screen/) :
+[developer.wordpress.org/reference/hooks/current_screen/](https://developer.wordpress.org/reference/hooks/current_screen/)
 
 	do_action( 'current_screen', WP_Screen $current_screen )
 
----
+Ce paramètre est une instance de `WP_Screen`, contenant des informations sur l'*écran* (la page) actuel. Celles qui nous intéresse sont les suivantes:
 
-On enregistre alors une *action* qui sera exécutée seulement lorsque l'on pourra connaître l'écran qui est alors chargé:
+- `$id` : Le nom de de l'écran en question.
+- `$base` : Dans certains cas, le nom est composé (exemple: `'edit-post'`). Cette propriété est la racine de ce nom (dans l'exemple précédent: `'base'`).
+- `$post_type` : Le nom d'un *type de contenu* associé à l'écran, s'il y en a un. Par exemple `'post'`.
+
+On enregistre alors une *action* sur cet *événement*, qui sera exécutée seulement lorsque l'on pourra récupérer ces informations [^1]:
 
 	class PLL_Bulk_Translate {
 		
 		public static function register_options( $screen, $options ) {
-			
+		
 			// ... 
 			
 			add_action( 'current_screen', array( self::$instance, 'init' ), 10, 1 );
-			
-			// ...		
+		}
+		
 	}
 
----
+[^1]: La syntaxe utilisée ici est un peu particulière. En effet, on ne désire pas déclencher une fonction existante dans l'*espace global*, mais la méthode `init()` d'une *instance* de `PLL_Bulk_Translate`. Cette instance est *référencée* dans la *propriété* `$instance`, qui est *statique*. On appelle donc cette propriété depuis la classe elle-même, à laquelle on accède par le mot-clé `self`, qui contient une *référence* de classe courante. cf. le chapitre *Refactoring d'un module existant - Créer un point d'accroche unique* de ce mémoire.
 
-Ce qui nous permet de vérifier si notre extension est applicable à cet écran : 
+On peut alors vérifier si notre extension est applicable à l'*écran* actuel, en comparant sa propriété `base` avec le *tableau* contenant les possibles *actions groupées* que l'on a enregistré dans la propriété `$options` de la classe `PLL_Bulk_Translate`[^2] : 
 
 	class PLL_Bulk_Translate {
 		public function init( $current_screen ) {
@@ -91,29 +85,29 @@ Ce qui nous permet de vérifier si notre extension est applicable à cet écran 
 				return false;
 			}
 			
-			// ...
+			// Ce code est exécuté si nous avons des actions groupées applicables à cet écran
 		}
 	}
 
-**Note** : On utilise une erreur silencieuse, car on ne veut pas casser le fonctionnement des pages d'administration n'utilisant pas notre extension.
+[^2]: On utilise dans ce cas une erreur silencieuse, pour ne pas casser le fonctionnement des pages d'administration n'utilisant pas notre extension.
 
----
+## Filtrer la liste des actions groupées
 
-## Les actions sur les listes
+Dans le panneau d'administration de *WordPress*, différents *écrans* contiennent une *table* listant un certain *type de contenu* ou les *termes* d'un *taxonomie*.
 
-A travers le fonctionnement de *PHP*, *WordPress* a créé des *événements* dont le nom est **dynamiquement assigné**. Par exemple, [/wp-admin/includes/class-wp-list-table.php](https://github.com/WordPress/WordPress/blob/77a31e6875ebc31396b70f6bd2682738ab6290b6/wp-admin/includes/class-wp-list-table.php#L454) :
+![La table des articles dans le panneau d'adminstration de WordPress](ipi-memoire-images/hooks-030_list-table.png)
 
-	class WP_List_Table {
-		protected function bulk_actions( $which = '' ) {
-			// ...
-			$this->_actions = apply_filters( "bulk_actions-{$this->screen->id}", $this->_actions );  
-			// ...
-		}
-	}
+Ces tables sont gérées par des classes *héritant* de la classe [WP_List_Table](https://github.com/WordPress/WordPress/blob/77a31e6875ebc31396b70f6bd2682738ab6290b6/wp-admin/includes/class-wp-list-table.php#L454). Elles ont en commun le code permettant de générer l'affichage HTML de la table. Dans ces *méthodes* gérant l'affichage, on s'intéresse à celle créant la liste déroulante des *actions groupées* sur les éléments d'une table.
 
----
+[developer.wordpress.org/reference/hooks/bulk_actions-this-screen-id/](https://developer.wordpress.org/reference/hooks/bulk_actions-this-screen-id/)
 
-Parce que l'on récupère l'*identifiant* de l'écran par notre *action* attachée à l'*événement* `'current_screen'`, il nous est possible d'attacher un *filtre* à cet *événement dynamique*.
+	apply_filters( "bulk_actions-{$this->screen->id}", string[] $actions )
+
+A travers le fonctionnement de PHP, *WordPress* a créé des événements dont le nom est **dynamiquement assigné**. C'est le cas ci-dessus, où la propriété `$id` de l'objet `WP_Screen` stocké dans notre objet `WP_List_Table` va être utilisée pour écrire le nom du filtre, et ce, au moment de l'**exécution** du code. Ainsi, ce filtre a un nom différent selon la page du panneau d'administration que l'utilisateur est en train d'afficher.
+
+Par conséquent, au moment de l'exécution de la méthode `bulk_actions`, tous les *filtres* enregistrés correspondants au nom généré vont, tour à tour, recevoir un tableau de valeurs qu'ils vont pouvoir modifier, puis renvoyer. Chaque *filtre* recevant le tableau retourné par le filtre précédent. Ce tableau sera ensuite réassigné à la propriété `$_actions` de la classe `WP_List_Table`.
+
+Comme l'on a également récupéré cet objet `WP_Screen` lors de l'*événement* `'current_screen'`, qui précède cet *événement dynamique*, on peut alors utiliser l'*identifiant* de l'écran pour y attacher un *filtre*.
 
 	public function init( $current_screen ) {
 		// ...
@@ -123,18 +117,14 @@ Parce que l'on récupère l'*identifiant* de l'écran par notre *action* attach�
 		// ...
 	}
 
---- 
-
-Ainsi, si l'écran d'administration correspond à l'un de ceux auxquels nous voulons attacher une *action groupée*, on l'ajoute dans la liste récupérée en paramètre.
+Ainsi, si l'écran d'administration correspond à l'un de ceux auxquels nous voulons attacher une *action groupée*, on l'ajoute dans le tableau récupéré en paramètre, puis on le retourne. La *clé* que l'on utilise pour ajouter une entrée au à ce tableau est importante, car c'est elle qui va servir lors de l'envoi de la *requête* pour savoir quelle action groupée l'utilisateur a sélectionné.
 
 	public function add_bulk_action( $actions ) {
 		$actions['pll_translate'] = __( 'Translate', 'polylang-pro' );
 		return $actions;
 	}
 
----
-
-C'est alors *WordPress* qui s'occupe de l'afficher à l'utilisateur de la même manière qu'il affiche les autres options. [/wp-admin/includes/wp-list-table.php](https://github.com/WordPress/WordPress/blob/77a31e6875ebc31396b70f6bd2682738ab6290b6/wp-admin/includes/class-wp-list-table.php#L454) :
+On laisse alors *WordPress* s'occuper d'afficher à l'utilisateur cette liste d'actions groupées. C'est toujours la méthode `bulk_actions` de la classe [WP_List_Table](https://github.com/WordPress/WordPress/blob/77a31e6875ebc31396b70f6bd2682738ab6290b6/wp-admin/includes/class-wp-list-table.php#L454) (ou ses classes dérivées) qui contient le code qui génère cet affichage. On voit que ce tableau que l'on a modifié est utilisé au sein d'une boucle pour afficher une à une les actions enregistrées.
 
 		class Wp_List_Table {
 			protected function bulk_actions( $which = '' ) {
@@ -149,21 +139,13 @@ C'est alors *WordPress* qui s'occupe de l'afficher à l'utilisateur de la même 
 			// ...
 		}
 
---- 
-
 ## Ouvrir le code aux autres extensions
 
-Il est possible d'utiliser cette architecture événementielle pour définir nos propres *hooks*, et rendre ainsi nos fonctionnalités extensibles par d'autres développeurs :
+Il est possible d'utiliser cette architecture événementielle pour définir nos propres *hooks*, et rendre ainsi nos fonctionnalités extensibles par d'autres développeurs. Il s'agit simplement d'exécuter dans notre propre code les fonctions `apply_filters()` ou `do_action()`, en leur passant des noms d'*événements* personnalisés.[^3] On s'intéresse alors à la création d'un *filtre personnalisé* :
 
-[developer.wordpress.org/reference/functions/apply_filters/](https://developer.wordpress.org/reference/functions/apply_filters/) : 
+[^3]: Il est tout à fait possible d'utiliser ses fonctions en leur passant des noms d'événements déjà existants dans *WordPress*, ce qui aura pour effet d'exécuter toutes les actions ou les filtres qui y ont été attachés, potentiellement plusieurs fois durant la même exécution de *WordPress*. 
 
-	apply_filters( string $tag, mixed $value );
-
-**Note** : Il faut passer au minimum deux paramètres, le nom du nouvel événement et une valeur qu'il passera en paramètre à chaque fonction appelée par les *filtres*. Tout paramètre supplémentaire sera passé en paramètre à cette fonction également.
-
----
-
-Puisque *WordPress* laisse la possibilité aux développeurs d'extensions d'enregistrer leurs propres *types de contenus* (voir [Custom Post Types](https://developer.wordpress.org/themes/basics/post-types/#custom-post-types)), on permet aux autres développeurs de décider si leurs *types de contenus* personnalisés pourront ou non être traduit / exportés à travers un *filtre personnalisé* :
+Puisque *WordPress* laisse la possibilité aux développeurs d'extensions d'enregistrer leurs propres *types de contenus* (cf. les [Custom Post Types](https://developer.wordpress.org/themes/basics/post-types/#custom-post-types) dans la documentation officielle de WordPress), on permet aux autres développeurs de décider si leurs *types de contenus* personnalisés pourront ou non être dupliqués / synchronisés / exportés à travers un *filtre personnalisé* :
 
 	public function init( $current_screen ) {
 		 // ...
@@ -175,21 +157,40 @@ Puisque *WordPress* laisse la possibilité aux développeurs d'extensions d'enre
 				return false;
 			}
 		}
+		// ...
+	}
 
----
+Il faut passer à la fonction `apply_filters()` au minimum deux *paramètres*: le nom du nouvel événement et une valeur qu'il passera en paramètre à chaque fonction appelée par les *filtres*. Ici notre valeur sera le tableau retourné par la fonction `PLL_Model::get_translated_post_types()`, qui permet justement de récupérer la liste des *types de contenu* que l'utilisateur aura paramétrés pour être traductibles dans les options de *Polylang*.
+
+![L'écran des options de Polylang permet de sélectionner les types de contenus personnalisés disponibles à la traduction](ipi-memoire-images/hooks-040_polylang-settings.png)
+
+Cette liste va servir de base, car il est évident que l'on ne désire pas qu'un contenu ne pouvant pas être traduit de manière individuelle puisse être traduit en masse. Mais si le développeur d'une extension tierce décide que le *type de contenu* qu'il a ajouté puisse être traductible uniquement de manière individuelle, il peut alors attacher un *filtre* à l'événement `'pll_bulk_translate_post_types'`, récupérer le tableau des types de contenus disponibles pour les traductions groupées, et en retirer celui qui l'intéresse.
 
 ## Visualiser la chaîne des événements
 
-Les événements déclenchés par *WordPress* sont renseignés dans le codex. Ils sont séparés en une liste d'*actions* : [WordPress Plugin API - Action Reference](https://codex.wordpress.org/Plugin_API/Action_Reference)
+Les événements déclenchés par *WordPress* sont renseignés dans le codex. Ils sont séparés en une [liste d'actions](https://codex.wordpress.org/Plugin_API/Action_Reference) et une [liste de filtres](https://codex.wordpress.org/Plugin_API/Filter_Reference). Ces listes sont triées par *thème* (pages publiques, panneau d'administration, requête AJAX) et les événements sont classées *dans l'ordre* dans lesquels ils sont déclenchés.
 
-Et une liste de *filtres* : [WordPress Plugin API - Filter Reference](https://codex.wordpress.org/Plugin_API/Filter_Reference)
+Si cela est pratique pour connaître le fonctionnement de *WordPress*, cela peut devenir difficile à suivre lors du développement d'une extension:
 
-Ces listes sont triées par thème et les *événements* sont classées par ordre de déclenchement.
+- Il est possible d'ajouter des *événements personnalisés*
+- On n'utilise pas forcément tous les événements à la fois
+- Certains événements seront disponibles pour plusieurs types de requêtes, d'autre non.
+- Certains événements ne se déclencheront pas toujours au même moment. C'est rare mais c'est le cas pour les événements concernant les *redirections*, qui peuvent intervenir à plusieurs moment de l'exécution simplement parce l'on se rend compte d'une *erreur* précédente...
 
----
-
-Comme il est possible de rajouter des *événements personnalisés*, et que on ne les utilise pas tous à la fois, il est utile d'avoir une vision plus précise du fonctionnement de notre plugin. Pour ce faire, j'ai choisi de les représenter d'une manière inspirée des *diagramme de séquence UML*:
+Afin d'avoir une vision plus précise du fonctionnement de notre extension, j'ai choisi de représenter les *événements* d'une manière adaptée des *diagramme de séquence UML*[^4]. Voici le schéma complet pour le fonctionnement que nous avons décrit plus haut.
 
 ![Séquence d'ajout d'une action groupée dans le panneau d'adminsitration WordPress](ipi-memoire-images/hooks-002_uml_sequence.png)
 
+Les rectangles tout en haut représentent les *objets* ou les *scripts*. Sous chacun d'entre eux, une ligne en pointillés (appelée *ligne de vie*) représente la durée pour laquelle ils restent dans la mémoire du programme. Les rectangles qui s'y accrochent sont les *fonctions* ou *méthodes* exécutées. Les flèches pleines représentent les *appels* à ces fonctions ou méthodes quant aux flèches en pointillés, elles en représentent les *valeurs de retour*.
 
+Le système d'*événements* est ici simplifié: il aurait fallu, pour chacun d'entre eux, représenter l'appel à la fonction `do_action()` (ou `apply_filters()`) du script `wp-includes/plugin.php` qui appelle lui même la méthode `do_action()` d'un objet `WP_Hook` qui va alors appeler la fonction ou méthode de notre programme... A la place, je me contente de représenter un appel direct du script dans lequel l'*événement* est déclenché vers la fonction (ou méthode) en question. Je rajoute simplement le nom de cet *événement* sur la flèche.
+
+Si la création de schémas de ce genre s'avère demander plus de travail, j'estime qu'elle m'a permis de récupérer le temps investi lors de la correction de mes erreurs. En effet, pouvoir analyser d'un coup d'oeil l'**ordre** de déclenchement des événements, de chargement des scripts et d'*initialisation* des objets m'a permis d'identifier des points de blocage dans mon programme, dont voici un exemple dans une de ses *itérations*.
+
+![Une redirection trop hâtive empêche l'analyse de la requête et la journalisation des erreurs](ipi-memoire-images/hooks-006_redirect-trouble.png)
+
+Dans le diagramme ci-dessus[^5], une *redirection* (circuit orange) pouvait empêcher la méthode `PLL_Bulk_Translate::parse_request()` d'être appelée (circuit bleu). Cette méthode a pour responsabilité d'analyser les potentielles erreurs de la requête, et de les transmettre à la *Settings API* de *WordPress* qui doit les communiquer à l'utilisateur. Lorsque cette redirection est déclenchée (il y a une condition à cela, et ce n'est donc pas toujours le cas), l'utilisateur ne pouvait donc pas être informé de la cause de cette redirection.
+
+[^4]: Utiliser les conventions de l'UML telle quelles n'est pas possible, car l'UML suppose que le code est **strictement** orienté objet, ce qui n'est pas le cas de *WordPress*, ni de *Polylang* par effet de bord. 
+
+[^5]: Ce diagramme est simplifié pour exposer le problème. Afin d'avoir mis le doigt sur ses causes, il a fallu explorer une plus grande partie du code. Ce schéma complet garde sa valeur pour réfléchir aux futures évolutions du programme, ou résoudre d'autres erreurs!

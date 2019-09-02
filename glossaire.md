@@ -33,6 +33,7 @@
 - **AJAX** (Asynchronous Javascript And XML) : Procédé permettant d'effectuer une *requête HTTP* sans provoquer le chargement complet de la page web dans le navigateur. La page sera *rafraîchie* lorsque le *navigateur* aura reçu une réponse de la part du *serveur*.
 - **Appel / Appeler** : Permet de récupérer la *valeur* contenue dans une *variable*, ou résultante de l'exécution d'une *fonction*.
 - **Assignation / Assigner** : Action de lier une *valeur* à une *variable déclarée*, qui permettra d'accéder à cette *valeur* par la suite.
+- **Bloc** (de code) : Regroupement de lignes de code destinées à être exécutées conjointement, mais potentiellement indépendamment du reste du programme.
 - **Chaînes (de caractères)** : Un type de données informatique composé d'une succession de caractères alphanumérique et de ponctuation. Peuvent être mono-caractères ou contenir des milliers de mots.
 - **Code source** : Les *instructions* écrites par un *programmeur* dans un *langage* compréhensible par les humains, avant une potentielle étape de transformation (minification, *compilation*, etc.).
 - **Condition** : Evalue une *expression* et exécute un *bloc de code* selon le résultat de cette évaluation.
@@ -51,14 +52,18 @@
 - **Langage interprété** : Lors de l'*exécution* d'un programme écrit dans un *langage interprété*, le code écrit par le programmeur est transformé en *instructions* compréhensibles par la machine au travers d'un *interpréteur*. Cet *interpréteur* est un programme qui doit donc être installé sur la machine chargée de l'exécution du programme.
 - **Open Source** : Désigne les *logiciels* dont le *code source* est partagé et dont les licences permettent la modification ainsi que la distribution par des tiers.
 - **Paradigme** (de programmation) : Manière de rédiger des programmes selon des idées et concepts directifs. Différents paradigmes de programmation peuvent produire des *applications* similaires mais dont le code diffère grandement.
+- **Portée** : Désigne le contexte dans lequel une *variable* ou toute autre *structure de données* est accessible lors de l'exécution d'un programme. On désigne deux types de **portées**:
+	+ La portée **globale** : Accessible à toutes les parties du programme.
+	+ Les portées **locales** : La *structure de données* n'existe que dans une sous-partie en question. Il peut s'agit d'un module, d'une *fonction*, d'un *bloc conditionnel*,etc.
 - **Règle métier** : Dans un *programme*, il s'agit de la partie responsable des traitements effectués sur les *données*. Exemple: le calcul de la *TVA* dans un logiciel de comptabilité.
-- **Stateless** : Un langage *sans état (stateless)* ne conserve pas de données entre deux *exécutions* d'un même *programme*
+- **Stateless** : Un langage *sans état (stateless)* ne conserve pas de données entre deux *exécutions* d'un même programme.
+- **Structure de données** : Permet de conserver une ou plusieurs *valeurs* (données) en mémoire lors de l'exécution d'un programme.
 - **Syntaxe** : L'ensemble des mot-clés spécifiques à un *langage de programmation*.
 - **Tableau** : *Type* de *valeur* permettant de stocker et d'accéder à un ensemble d'autres *valeurs* à partir d'une *clé* (ou *index*) les identifiant au sein de ce tableau.
 - **Type** : Défini la nature d'une *donnée*, comme par exemple un *entier* ou une *chaîne de caractères*.
 - **Typage dynamique** : Capacité d'un langage informatique d'évaluer, lors de l'*exécution*, le *type* de données stockées dans la *mémoire temporaire*.
 - **Valeur** : *Donnée* utilisée, voire générée, lors de l'exécution d'un programme.
-- **Variable** : Permet de garder en mémoire une *valeur* lors de l'exécution d'un programme.
+- **Variable** : *Structure de données* stockant une unique *valeur* qui peut être récupérée, modifiée, réassignée lors de l'exécution d'un programme.
 
 ## Bases de Données
 
@@ -69,7 +74,7 @@
 
 ## Programmation Orientée Objet (POO)
 
-La *Programmation Orientée Objet* est un *paradigme* de programmation popularisé par le langage *Java*. Son objectif est de rendre le code plus modulable en l'agençant dans des *objets* qui surveillent leur propre *état* et sont chacun responsables de *fonctionnalités* spécifiques.
+La *Programmation Orientée Objet* 00est un *paradigme* de programmation popularisé par le langage *Java*. Son objectif est de rendre le code plus modulable en l'agençant dans des *objets* qui surveillent leur propre *état* et sont chacun responsables de *fonctionnalités* spécifiques.
 
 - **Classe** : Définition de *propriétés* et de *méthodes*, groupée thématiquement, permettant la réutilisation de leur *code* à travers les *instances* de cette classe.
 - **Composition** : Consiste à inclure au sein d'une *classe*, une ou plusieurs *propriétés* étant elles-mêmes des *instances* d'autres *classes*.
@@ -97,6 +102,7 @@ La *Programmation Orientée Objet* est un *paradigme* de programmation popularis
 	+ **future** : Une date de publication a été définie pour ce contenu, qui sera alors automatiquement mis en ligne. 
 - **Taxonomies** : Chaque *contenu* peut avoir une liste de taxonomies qui servent à le classifier avec des contenus présentant des similarités. Ces *taxonomies* peuvent être :
 	+ **hiérarchisées** : Chaque taxonomie peut être rattachée à une taxonomie *parente*.
+- **Terme** : Dans une *taxonomie* donnée (exemple: les *catégories*), plusieurs *termes* vont définir le sujet des *contenu* auxquels ils sont appliqués (exemple: Un *article* avec la *catégorie* : "retour d'expérience").
 
 ## Agilité & framework SCRUM
 
