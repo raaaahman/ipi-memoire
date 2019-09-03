@@ -1,31 +1,45 @@
-# Glossaire des termes utilisés
+# Glossaire
 
 ## Informatique Générale
 
-- **Adresse IP** : Série de chiffres permettant d'identifier une machine ou un *sous-réseau* au sein d'un *réseau* informatique.
-- **Adresse web** : Pour accéder aux pages hébergées au sein du *World Wide Web*, il est usuel de renseigner dans la *requête* l'*URL* de la *ressource* demandée. Cette *URL* comprend un *nom de domaine*, un éventuel *chemin*, ainsi que d'éventuels *paramètres*.
 - **Application / logiciel** : Toute forme de *programme* informatique fournissant une ou plusieurs *fonctionnalités* à un *utilisateur*. Ainsi, *Polylang*, comme ces modules, peuvent tous être considérés comme des applications.
 - **Base de données** : *Logiciel* gérant la *persistance* ainsi que l'accès à un ensemble de *données*.
-- **CMS (Content Management System)** : *Application* permettant la gestion de contenus en ligne sans besoin de programmer. Cela ouvre la possibilité aux personnes non formées à la programmation d'agir en tant qu'administrateurs de *sites internet*.
 - **Contenu** : Un ensemble de *données* formant une unité qui leur donne un sens au yeux d'un utilisateur.
-- **Distant / à distance** : Se Nécessite un protocole de transfert, comme le *HTTP* dans le cas d'internet.
+- **Distant / à distance** : Désigne un *ressource* ou un système physique auquel l'on accède à travers un réseau.
 - **Extension** (de fichier) : Dernière partie du nom d'un *fichier*, précédé d'un point, donnant une indication sur son format.
 - **Fichier** : Structure de données stockées sous forme binaires ou textuelles.
-- **Hors-ligne** : Sans d'être connecté à une machine *distante*.
-- **HTTP (Hyper Text Transfer Protocol)** : Protocole de transfert de données permettant d'accéder à des contenus distants à travers l'internet. La *machine cliente* génère une *requête* qui est dirigée par un *DNS (Domain Name Server)*, puis éventuellement vérifiée par le *serveur* (si l'*adresse* de la requête est valide), qui retourne ensuite une *réponse*.
+- **Format** ( de fichier) : Convention d'encodage d'un fichier permettant à différents programmes d'en interpréter le contenu.
 - **Interface utilisateur (UI)** ou **interface homme/machine (IHM)** : Partie d'un *programme* ou d'un *système informatique* permettant à un *utilisateur* humain de transmettre des *données* et de déclencher des *traitements* par la machine.
-- **Local / en local** : Se dit d'une *ressource* existante sur le même système informatique.
+- **JSON** (JavaScript Object Notation) : Langage de description de document *structuré* imitant la syntaxe des *objets Javascript*. Très utiliser dans les *applications web* pour la communication *client / serveur*.
+- **Local / en local** : Se dit d'une *ressource* existante dans le système informatique que l'on manipule.
 - **Localisation** : Processus de créer des versions d'une *application* ou d'un *contenu* dans plusieurs langues différentes.
 - **Métadonnées** : Données isolées, secondaires à un *contenu*, et offrant des précisions techniques sur celui-ci, permettant ainsi sa classification auprès d'autres *contenus*. Plusieurs *contenus* peuvent partager les mêmes *métadonnées*.
-- **Navigateur (web)** : Application permettant la lecture de *contenus* distants, hébergés sur le *World Wide Web*.
-- **Nom de domaine** : *chaînes de texte* permettant la traduction vers une *adresse IP* lors d'une *requête HTTP*.
 - **OS** (Operating System / Système d'exploitation) : *Couche logicielle* minimale permettant l'exécution de *programme* informatique sur une machine. 
 - **Persistance** : Capacité des données à subsister après l'extinction du programme informatique.
 - **Programme** : Série d'*instructions* à réaliser par une machine. Ecrites par un *programmeur* à travers un *langage* permettant à la machine d'interpréter ces *instructions*.
 - **Réseau** : Connexion de plusieurs machines permettant leur interaction et les échanges de *données* entre elles.
-- **Site (web)** : Une ressource distante, pouvant prendre la forme d'une *application* hébergée sur le *World Wide Web*.
 - **Téléchargement** : Action de récupérer des *fichiers distants* à travers un *réseau*. 
 - **Translation Management System (TMS)** : *Application* permettant à un utilisateur de traduire ou de gérer des traductions de *contenus*.
+- **XML** (eXtensible Markup Language) : Langage de description de document *structuré* à travers une syntaxe *balisée*. Il est très utilisé comme format de *fichiers d'échange* entre différentes applications.
+
+## Internet
+
+Ce terme désigne un *réseau* mondial permettant la communication entre différentes systèmes informatiques. Il regroupe plusieurs *protocoles de communication* dont les utilisations diffèrent.
+
+- **Adresse IP** : Série de chiffres permettant d'identifier une machine ou un *sous-réseau* au sein d'un *réseau* informatique.
+- **Adresse web** : Pour accéder aux pages hébergées au sein du *World Wide Web*, il est usuel de renseigner dans la *requête* l'*URL* de la *ressource* demandée. Cette *URL* comprend un *nom de domaine*, un éventuel *chemin*, ainsi que d'éventuels *paramètres*.
+- **CMS (Content Management System)** : *Application* permettant la gestion de contenus en ligne sans besoin de programmer. Cela ouvre la possibilité aux personnes non formées à la programmation d'agir en tant qu'administrateurs de *sites internet*.
+- **Hors-ligne** : Sans d'être connecté à une machine *distante*.
+- **HTTP (Hyper Text Transfer Protocol)** : Protocole de transfert de données permettant d'accéder à des contenus distants à travers l'internet. On distingue : 
+	+ Les **requêtes** : générée par le *client*, puis dirigée par un *DNS (Domain Name Server)* vers le bon *serveur*
+	+ Les **réponses** : lorsque le *serveur* reçoit une requête, il peut la traiter par l'un de ses *programmes*, puis retourne une *réponse* au client selon le résultat de ce traitement.
+	+ Les **en-têtes** : dans les *réponses* comme dans les *requêtes*, les *en-têtes* ont un rôle descriptif du ces requêtes / réponses. Elles peuvent contenir des informations sur :
+		* l'origine de la requête / réponse.
+		* le type de données échangées.
+	+ Le **corps** : d'une requête ou d'une réponse contient les *données* à échanger.
+- **Navigateur (web)** : Application permettant la lecture de *contenus* distants, hébergés sur le *World Wide Web*.
+- **Nom de domaine** : *chaînes de texte* permettant la traduction vers une *adresse IP* lors d'une *requête HTTP*.
+- **Site (web)** : Une ressource distante, pouvant prendre la forme d'une *application* hébergée sur le *World Wide Web*.
 - **(World Wide) Web** : Désigne le réseau mondial de partage d'information crée à partir des pages *web* reliées entre elles par le système de *liens hypertextes*. Inventé par *Tim Berners Lee* dans les années 1990 sur le modèle de l'*ARPANET*.
 
 ## Développement
@@ -37,13 +51,15 @@
 - **Chaînes (de caractères)** : Un type de données informatique composé d'une succession de caractères alphanumérique et de ponctuation. Peuvent être mono-caractères ou contenir des milliers de mots.
 - **Code source** : Les *instructions* écrites par un *programmeur* dans un *langage* compréhensible par les humains, avant une potentielle étape de transformation (minification, *compilation*, etc.).
 - **Condition** : Evalue une *expression* et exécute un *bloc de code* selon le résultat de cette évaluation.
-- **Côté client** : Dans une *application* sur le modèle client / serveur, désigne la partie du programme exécutée sur la machine locale de l'utilisateur, en général dans un *navigateur* lorsque l'*application* prend la forme d'un *site web*.
+- **Côté client** : Dans une *application* sur le modèle client / serveur, désigne la partie du programme exécutée sur la machine locale de l'utilisateur, en général dans un *navigateur web* lorsque l'*application* prend la forme d'un *site web*.
 - **Côté serveur** : Partie du programme exécutée sur la machine distante (le *serveur*), généralement en réponse à une *requête HTTP*.
 - **Déclaration / Déclarer** : Dans le cas d'une *variable*, il s'agit de lui donner un nom, afin que l'on puisse l'*appeler* par la suite. Dans le cas d'une *fonction*, l'on doit également écrire le *bloc de code* qui sera exécuté lors de son *appel*.
 - **Documentation** : Dans l'ingénierie logicielle, support textuel permettant d'expliciter le fonctionnement du *programme informatique* comme les techniques mises en place.
 - **Expression** : Portion de code renvoyant une *valeur*, il peut s'agir d'une opération mathématique, d'une comparaison entre deux *variables*, du résultat de l'*appel d'une fonction*, etc.
 - **Fonctionnalité** (feature) : Partie d'une *application* permettant de répondre à un besoin défini. Les fonctionnalités sont en théorie indépendantes les unes des autres.
-- **Fonctions** : *Bloc* de code destiné à être utilisé plusieurs fois à travers le programme, et pouvant retourner une *valeur*.
+- **Fonction** : *Bloc* de code destiné à être utilisé plusieurs fois à travers le programme, et pouvant retourner une *valeur*. Une fonction peut être :
+	+ **nommée** : Comme une *variable*, une fonction doit être *déclarée* avec un *nom*, ainsi que le code qu'elle *exécutera* lors de futurs *appels*.
+	+ **anonyme** : Cette *fonction* n'est pas *déclarée* avec un nom permettant de l'identifier dans l'espace mémoire. Elle est donc forcément liée à une autre partie du programme qui se charge de l'*appeler*.
 - **Gestion des versions** : Procédé permettant de fiabiliser la création de programme informatique en organisant la persistance des incréments du programme.
 - **IDE** (Integrated Development Environment) : *Logiciel* destiné à l'édition du *code* par les programmeurs.
 - **Interface** :  construction au sein d'un *langage de programmation* permettant de définir une *implémentation* déléguée à une *classe*.
@@ -52,6 +68,7 @@
 - **Langage interprété** : Lors de l'*exécution* d'un programme écrit dans un *langage interprété*, le code écrit par le programmeur est transformé en *instructions* compréhensibles par la machine au travers d'un *interpréteur*. Cet *interpréteur* est un programme qui doit donc être installé sur la machine chargée de l'exécution du programme.
 - **Open Source** : Désigne les *logiciels* dont le *code source* est partagé et dont les licences permettent la modification ainsi que la distribution par des tiers.
 - **Paradigme** (de programmation) : Manière de rédiger des programmes selon des idées et concepts directifs. Différents paradigmes de programmation peuvent produire des *applications* similaires mais dont le code diffère grandement.
+- **Paramètres / arguments** : Une ou plusieurs *valeurs* passées à une fonction, afin qu'elle en effectue le traitement.
 - **Portée** : Désigne le contexte dans lequel une *variable* ou toute autre *structure de données* est accessible lors de l'exécution d'un programme. On désigne deux types de **portées**:
 	+ La portée **globale** : Accessible à toutes les parties du programme.
 	+ Les portées **locales** : La *structure de données* n'existe que dans une sous-partie en question. Il peut s'agit d'un module, d'une *fonction*, d'un *bloc conditionnel*,etc.
@@ -71,6 +88,15 @@
 - **SGBDR** (Système de Gestion de Bases de Données Relationnelles) : *Logiciel* permettant le stockage ordonné et la lecture de *données* pouvant exprimer des corrélations.
 - **SQl** : Langage pour effectuer des *requêtes* envers des *SGBDR* afin d'y lire/écrire des *données*. Ce langage a été étendu dans plusieurs *sur-ensembles*, notamment *MySQL* et *MariaDB*.
 - **Table**: Dans les *Systèmes de Gestion de Base de Données Relationnelles*, les tables sont les répertoires contenant une liste d'*entrées* (ou lignes), contenant des données structurées de manière similaire.
+
+## Pages Web et Navigateurs
+
+- **DOM** (Document Object Model) : Représentation abstraite de la *page web* dans le *navigateur web*, qui peut être modifiée à la volée, notamment par du code javascript via la *DOM API*.
+- **Elément** (HTML) : Le composant de base d'un *document HTML*. Les éléments sont des contenants pour les *données* qui seront affichées à l'utilisateur. Les éléments peuvent contenir d'autres éléments, on parle alors d'*éléments parents* et d'*éléments enfants*.
+	+ **Attributs** : Définissent plus précisément le comportement d'un *élément* au sein d'un *document HTML*. Par exemple, l'attribut `href` permet de définir une *URL* de destination pour un lien hypertexte.
+- **Evénement** : Se produit lors d'une certaine action du *navigateur web*, par exemple le chargement d'une page HTML, ou une entrée de son *interface utilisateur* (comme un clic de la souris).
+- **Formulaire** (HTML) : Cet ensemble d'*éléments* a pour fonction de permettre à l'utilisateur d'entrer ou de sélectionner des *valeurs* à destination d'être envoyées vers un serveur (ou utilisée dans un *script côté client*).
+- **HTML** (Hyper Text Markup Language) : permet la rédaction de documents *structurés* à travers une syntaxe *balisée*. Il est construit à destination du *web* en implémentant le système de *liens hypertextes*, et est *interprété* par tous les *navigateurs web* afin de présenter ces pages web aux utilisateurs.
 
 ## Programmation Orientée Objet (POO)
 
