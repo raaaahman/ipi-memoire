@@ -73,6 +73,7 @@ Ce terme désigne un *réseau* mondial permettant la communication entre différ
 	+ La portée **globale** : Accessible à toutes les parties du programme.
 	+ Les portées **locales** : La *structure de données* n'existe que dans une sous-partie en question. Il peut s'agit d'un module, d'une *fonction*, d'un *bloc conditionnel*,etc.
 - **Règle métier** : Dans un *programme*, il s'agit de la partie responsable des traitements effectués sur les *données*. Exemple: le calcul de la *TVA* dans un logiciel de comptabilité.
+- **Régression** : Au cours du développement, désigne le fait d'introduire une nouvelle *erreur* dans une partie existante d'une *application*.
 - **Stateless** : Un langage *sans état (stateless)* ne conserve pas de données entre deux *exécutions* d'un même programme.
 - **Structure de données** : Permet de conserver une ou plusieurs *valeurs* (données) en mémoire lors de l'exécution d'un programme.
 - **Syntaxe** : L'ensemble des mot-clés spécifiques à un *langage de programmation*.
@@ -100,11 +101,11 @@ Ce terme désigne un *réseau* mondial permettant la communication entre différ
 
 ## Programmation Orientée Objet (POO)
 
-La *Programmation Orientée Objet* 00est un *paradigme* de programmation popularisé par le langage *Java*. Son objectif est de rendre le code plus modulable en l'agençant dans des *objets* qui surveillent leur propre *état* et sont chacun responsables de *fonctionnalités* spécifiques.
+La *Programmation Orientée Objet* est un *paradigme* de programmation popularisé par le langage *Java*. Son objectif est de rendre le code plus modulable en l'agençant dans des *objets* qui surveillent leur propre *état* et sont chacun responsables de *fonctionnalités* spécifiques.
 
 - **Classe** : Définition de *propriétés* et de *méthodes*, groupée thématiquement, permettant la réutilisation de leur *code* à travers les *instances* de cette classe.
 - **Composition** : Consiste à inclure au sein d'une *classe*, une ou plusieurs *propriétés* étant elles-mêmes des *instances* d'autres *classes*.
-- **Couplage** : Un *couplage fort* désigne des *classes* dont l'inter-relation ne permet pas à l'une de se passer de l'autre. A l'inverse d'un *couplage faible*.
+- **Couplé(e) / Couplage** : Un *couplage fort* désigne des *classes* dont l'inter-relation ne permet pas à l'une de se passer de l'autre. A l'inverse d'un *couplage faible*.
 - **Design Pattern** (Patron de Conception) : Désigne une organisation du code selon certaines conventions, permettant d'améliorer la maintenabilité du code.
 - **Héritage** : Mécanisme permettant de créer une *classe enfant* (ou *sous-classe*) à partir d'une *classe parent* (ou *super-classe*) existante. La *classe enfant* peut donc utiliser le code contenu dans son *parent*.
 - **Instance / Objet** : Pour exécuter le code défini dans une *classe*, il est généralement nécessaire d'*instancier* cette classe. Chaque *instance* d'une même classe, bien que se comportant de façon similaire, n'est pas affectée par les modifications apportées aux autres instances.
@@ -118,6 +119,7 @@ La *Programmation Orientée Objet* 00est un *paradigme* de programmation popular
 
 - **Articles** : Les *contenus* principaux de *WordPress*, composé, entre autres, d'un titre et d'un corps. Ils se différencient des *pages* seulement dans leur utilisation car les deux sont enregistrés dans une *table* commune de la *base de données*.
 - **Catégories** : *Taxonomie* *hiérarchisée* s'appliquant par défaut aux *articles* et aux *pages*.
+- **Coeur** (Core ou moteur) : Par opposition aux *extension*, désigne la base du *CMS* qui peut être dérivée dans les divers *sites webs* construits avec.
 - **(Type de) Contenu Personnalisé** : Il est possible pour le développeur (ou l'utilisateur muni d'une extension), de définir de nouveaux types de contenus, représentant à sa convenance, des événements, des lieux, des projets, ou tout autre concept ayant du sens au sein de son *application*. Ces contenus se comporteront dans *WordPress* à la manière des *articles* ou *pages*, ou d'une manière nouvelle selon les paramètres qui leur seront assignés.
 - **Extension** (plugin): Le coeur du *CMS* peut être enrichi de fonctionnalités grâce au *téléchargement* et à l'activation d'extensions. Celles-ci peuvent être gratuites et mises à disposition sur le réseau public des extensions, ou payantes et vendues selon les modalités que décide leur créateur.
 - **Publier / Publié** : Les nouveaux *contenus* enregistrés dans la base de données de *WordPress* ne sont pas automatiquement accessible en ligne aux visiteur. Pour cela, l'utilisateur doit changer le *statut* de ce contenu en le publiant.
