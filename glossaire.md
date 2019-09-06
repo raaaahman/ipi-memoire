@@ -62,6 +62,7 @@ Ce terme désigne un *réseau* mondial permettant la communication entre différ
 	+ **anonyme** : Cette *fonction* n'est pas *déclarée* avec un nom permettant de l'identifier dans l'espace mémoire. Elle est donc forcément liée à une autre partie du programme qui se charge de l'*appeler*.
 - **Gestion des versions** : Procédé permettant de fiabiliser la création de programme informatique en organisant la persistance des incréments du programme.
 - **IDE** (Integrated Development Environment) : *Logiciel* destiné à l'édition du *code* par les programmeurs.
+- **Implémenté(e) / Implémentation** : Un *fonctionnalité* a dépassé le stade de la conception et a été réalisée au sein d'un *programme*.
 - **Interface** :  construction au sein d'un *langage de programmation* permettant de définir une *implémentation* déléguée à une *classe*.
 - **Instruction** : Opération qu'une machine devra exécuter lors d'un *programme*, agissant généralement sur des *données*, en y accédant, les modifiant et/ou en les enregistrant.
 - **Langage** (de programmation) : Règles d'écriture permettant à une machine de traduire et d'exécuter des *instructions* écrites par un *programmeur* à son intention.

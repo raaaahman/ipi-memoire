@@ -157,14 +157,14 @@ La classe `Pluggable_Functions` ne fait que ré-implémenter l'*API* de *WordPre
 
 ## Paramétrage du test
 
-Une fois notre test complet, on veut pouvoir l'utiliser sur plusieurs *scénarios*. Dans ces scénarios, nous allons faire varier les *paramètres* suivants:
+Une fois notre test complet, on veut pouvoir l'utiliser sur plusieurs *scénarios*. Dans ces scénarios, nous allons faire varier les *paramètres* suivants[^1]:
 
-- `'action'`    : Le nom de l'*action groupée*[^1] que l'utilisateur essaie d'exécuter.
-- `'post'`      : Les identifiants des *contenus*[^1] sélectionnés pour la traduction.
-- `'post_type'` : Le *type de contenu*[^1] que désire traduire l'utilisateur.
-- `'pll-translate-lang'` : Le *code des langages*[^1] dans lequel l'utilisateur souhaite traduire les contenus.
-- `'translate'` : Le nom du *mode de traduction*[^1] choisi.
-- `'user_capabilities'`  : Liste des *capabilities* ( = droits / permissions ) définies pour l'utilisateur actuel[^1].
+- `'action'`    : Le nom de l'*action groupée* que l'utilisateur essaie d'exécuter.
+- `'post'`      : Les identifiants des *contenus* sélectionnés pour la traduction.
+- `'post_type'` : Le *type de contenu* que désire traduire l'utilisateur.
+- `'pll-translate-lang'` : Le *code des langages* dans lequel l'utilisateur souhaite traduire les contenus.
+- `'translate'` : Le nom du *mode de traduction* choisi.
+- `'user_capabilities'`  : Liste des *capabilities* ( = droits / permissions ) définies pour l'utilisateur actuel.
 
 [^1]: Les utilisateurs, langages, contenus, comme les actions groupées en question n'ont pas besoin d'exister, puisque l'on stoppe l'exécution de notre fonction aussi tôt que nous avons l'assurance qu'elle se comporte comme prévu.
 
@@ -206,12 +206,11 @@ Le *SUT* aboutit mais certains paramètres sont absents : notre test est incompl
 
 ## En conclusion
 
-L'écriture de *test automatisés* est une expérience que j'espérais acquérir lors du choix de mon entreprise. En effet, travaillant sur un **produit** sensé perdurer dans le temps, il est nécessaire de s'assurer que les nouvelles évolution ne viennent pas *générer de dysfonctionnement* dans les fonctionnalités existantes.
+L'écriture de *test automatisés* est une expérience que j'espérais acquérir lors du choix de mon entreprise. En effet, travaillant sur un produit sensé perdurer dans le temps, il est nécessaire de s'assurer que les nouvelles évolution ne viennent pas **générer de dysfonctionnement* dans les fonctionnalités existantes. Bien que ma collègue Christelle effectue une batterie de tests manuels sur l'intégralité du produit avant la sortie de chaque nouvelle version, ce *processus automatisé* nous offre deux avantages:
 
-Bien ma collègue Christelle effectue une batterie de tests manuels sur l'intégralité du produit avant la sortie de chaque nouvelle version, ce *processus automatisé* nous offre deux avantages:
+Ces tests sont disponibles **lors du développement**. Ils sont très rapides à exécuter ( en dessous d'une minute pour tester l'intégralité de *Polylang*) et on peut par conséquent les vérifier régulièrement. Cela nous permet de nous assurer que chaque nouvel ajout ne provoque pas de *régression*.
 
-- Ces tests sont disponibles **lors du développement**. Ils sont très rapides à faire tourner ( en dessous d'une minute pour tester l'intégralité de *Polylang*) et on peut par conséquent les vérifier régulièrement. Cela nous permet de nous assurer que chaque nouvel ajout ne provoque pas de *régression*.
-- Ces tests nous aident à **identifier l'origine** des problèmes rencontrés. Si la partie du code qu'ils testent est suffisamment restreinte, les recherches de la cause d'une erreur sont facilitées (d'où mon insistance durant ce chapitre sur le contrôle de l'environnement de chaque test).
+Ces tests nous aident à **identifier l'origine** des problèmes rencontrés. Si la partie du code qu'ils testent est suffisamment restreinte, les recherches de la cause d'une erreur sont facilitées (d'où mon insistance durant ce chapitre sur le contrôle de l'environnement de chaque test).
 
 En théorie, l'écriture d'un test devrait avoir une fonction de **documentation** du code de production. En effet, indiquer clairement les *paramètres* comme les *résultats attendus* pour chaque sous-partie de l'application, pourrait être une forme de *communication non-verbale* entre les développeurs.
 

@@ -31,16 +31,12 @@ A chaque initialisation, *WordPress* cherche dans son sous-dossier `wp-content/p
 
 	do_action( 'plugins_loaded' );
 
-Cette *action* est déclenchée après que l'**intégralité** des fichiers des *extensions* aient été chargés en mémoire. Cela permet aux auteurs d'extensions de reporter l'exécution de leur code, afin d'attendre d'être sûr que l'intégralité de leur extension est chargée, et ainsi de ne pas provoquer d'erreur fatale. 
+Cette *action* est déclenchée après que l'**intégralité** des fichiers des *extensions* aient été chargés en mémoire. Cela permet aux auteurs d'extensions de reporter l'exécution de leur code, afin d'attendre d'être sûr que l'intégralité de leur extension soit chargée, et ainsi de ne pas provoquer d'erreur fatale. 
 
 Dans notre cas, un fichier nommé `xliff-exporter.php` contient la description de notre extension et nous sert donc de **point d'entrée**. Comme l'on ne peut pas être certain que le fichier contenant notre classe `PLL_Bulk_Translate` ait été chargé avant l'exécution du code contenu dans le fichier `xliff-exporter.php`, on a choisi d'attendre que l'événement *plugins_loaded* soit déclenché pour continuer l'exécution de notre code.
 
 	add_action( 'plugins_loaded', 'add_bulk_export' );
-	/**
-	 * Adds 'export' bulk option in Translate bulk action {@see PLL_Bulk_Translate::register_options()}
-	 *
-	 * @return mixed
-	 */
+	
 	function add_bulk_export() {
 		PLL_Bulk_Translate::register_options(
 			'edit',
@@ -62,7 +58,7 @@ Ce paramètre est une instance de `WP_Screen`, contenant des informations sur l'
 - `$base` : Dans certains cas, le nom est composé (exemple: `'edit-post'`). Cette propriété est la racine de ce nom (dans l'exemple précédent: `'base'`).
 - `$post_type` : Le nom d'un *type de contenu* associé à l'écran, s'il y en a un. Par exemple `'post'`.
 
-On enregistre alors une *action* sur cet *événement*, qui sera exécutée seulement lorsque l'on pourra récupérer ces informations [^1]:
+On enregistre alors une *action* sur cet *événement*, qui sera exécutée seulement lorsque l'on pourra récupérer ces informations[^1] :
 
 	class PLL_Bulk_Translate {
 		
@@ -75,7 +71,7 @@ On enregistre alors une *action* sur cet *événement*, qui sera exécutée seul
 		
 	}
 
-[^1]: La syntaxe utilisée ici est un peu particulière. En effet, on ne désire pas déclencher une fonction existante dans l'*espace global*, mais la méthode `init()` d'une *instance* de `PLL_Bulk_Translate`. Cette instance est *référencée* dans la *propriété* `$instance`, qui est *statique*. On appelle donc cette propriété depuis la classe elle-même, à laquelle on accède par le mot-clé `self`, qui contient une *référence* de classe courante. cf. le chapitre *Refactoring d'un module existant - Créer un point d'accroche unique* de ce mémoire.
+[^1]: La syntaxe utilisée ici est un peu particulière. En effet, on ne désire pas déclencher une fonction existante dans l'*espace global*, mais la méthode `init()` d'une *instance* de `PLL_Bulk_Translate`. Cette instance est *référencée* dans la *propriété* `$instance`, qui est *statique*. On appelle donc cette propriété depuis la classe elle-même, à laquelle on accède par le mot-clé `self`, qui contient une *référence* de classe courante (cf. le chapitre *Refactoring d'un module existant - Créer un point d'accroche unique* de ce mémoire).
 
 On peut alors vérifier si notre extension est applicable à l'*écran* actuel, en comparant sa propriété `base` avec le *tableau* contenant les possibles *actions groupées* que l'on a enregistré dans la propriété `$options` de la classe `PLL_Bulk_Translate`[^2] : 
 
@@ -97,7 +93,7 @@ Dans le panneau d'administration de *WordPress*, différents *écrans* contienne
 
 ![La table des articles dans le panneau d'adminstration de WordPress](ipi-memoire-images/hooks-030_list-table.png)
 
-Ces tables sont gérées par des classes *héritant* de la classe [WP_List_Table](https://github.com/WordPress/WordPress/blob/77a31e6875ebc31396b70f6bd2682738ab6290b6/wp-admin/includes/class-wp-list-table.php#L454). Elles ont en commun le code permettant de générer l'affichage HTML de la table. Dans ces *méthodes* gérant l'affichage, on s'intéresse à celle créant la liste déroulante des *actions groupées* sur les éléments d'une table.
+Ces tables sont gérées par des classes *héritant* de la classe [WP_List_Table](https://github.com/WordPress/WordPress/blob/77a31e6875ebc31396b70f6bd2682738ab6290b6/wp-admin/includes/class-wp-list-table.php#L454). Elles ont en commun le code permettant de générer l'affichage HTML de la table. Dans ces *méthodes* gérant l'affichage, on s'intéresse à celles créant la liste déroulante des *actions groupées* sur les éléments d'une table.
 
 [developer.wordpress.org/reference/hooks/bulk_actions-this-screen-id/](https://developer.wordpress.org/reference/hooks/bulk_actions-this-screen-id/)
 
@@ -164,20 +160,20 @@ Il faut passer à la fonction `apply_filters()` au minimum deux *paramètres*: l
 
 ![L'écran des options de Polylang permet de sélectionner les types de contenus personnalisés disponibles à la traduction](ipi-memoire-images/hooks-040_polylang-settings.png)
 
-Cette liste va servir de base, car il est évident que l'on ne désire pas qu'un contenu ne pouvant pas être traduit de manière individuelle puisse être traduit en masse. Mais si le développeur d'une extension tierce décide que le *type de contenu* qu'il a ajouté puisse être traductible uniquement de manière individuelle, il peut alors attacher un *filtre* à l'événement `'pll_bulk_translate_post_types'`, récupérer le tableau des types de contenus disponibles pour les traductions groupées, et en retirer celui qui l'intéresse.
+Cette liste va servir de base, car il est évident que l'on ne désire pas qu'un contenu ne pouvant pas être traduit de manière individuelle puisse être traduit en masse. Mais si le développeur d'une extension tierce décide que le *type de contenu* qu'il a ajouté peut être traductible uniquement de manière individuelle, il peut alors attacher un *filtre* à l'événement `'pll_bulk_translate_post_types'`, récupérer le tableau des types de contenus disponibles pour les traductions groupées, et en retirer celui qui l'intéresse.
 
 ## Visualiser la chaîne des événements
 
-Les événements déclenchés par *WordPress* sont renseignés dans le codex. Ils sont séparés en une [liste d'actions](https://codex.wordpress.org/Plugin_API/Action_Reference) et une [liste de filtres](https://codex.wordpress.org/Plugin_API/Filter_Reference). Ces listes sont triées par *thème* (pages publiques, panneau d'administration, requête AJAX) et les événements sont classées *dans l'ordre* dans lesquels ils sont déclenchés.
+Les événements déclenchés par *WordPress* sont renseignés dans le *codex*. Ils sont séparés en une [liste d'actions](https://codex.wordpress.org/Plugin_API/Action_Reference) et une [liste de filtres](https://codex.wordpress.org/Plugin_API/Filter_Reference). Ces listes sont triées par *thème* (pages publiques, panneau d'administration, requête AJAX) et les événements sont classées dans l'*ordre* dans lesquels ils sont déclenchés.
 
-Si cela est pratique pour connaître le fonctionnement de *WordPress*, cela peut devenir difficile à suivre lors du développement d'une extension:
+Si cela est pratique pour connaître le fonctionnement de *WordPress*, cela peut devenir difficile à suivre lors du développement d'une extension, pour les raisons suivantes :
 
 - Il est possible d'ajouter des *événements personnalisés*
 - On n'utilise pas forcément tous les événements à la fois
 - Certains événements seront disponibles pour plusieurs types de requêtes, d'autre non.
-- Certains événements ne se déclencheront pas toujours au même moment. C'est rare mais c'est le cas pour les événements concernant les *redirections*, qui peuvent intervenir à plusieurs moment de l'exécution simplement parce l'on se rend compte d'une *erreur* précédente...
+- Certains événements ne se déclencheront pas toujours au même moment. C'est rare mais c'est le cas pour les événements concernant les *redirections*, qui peuvent intervenir à plusieurs moment de l'exécution du code à d'une *erreur* dans les entrées du programme / données manipulées ...
 
-Afin d'avoir une vision plus précise du fonctionnement de notre extension, j'ai choisi de représenter les *événements* d'une manière adaptée des *diagramme de séquence UML*[^4]. Voici le schéma complet pour le fonctionnement que nous avons décrit plus haut.
+Afin d'avoir une vision plus précise du fonctionnement de notre extension, j'ai choisi de représenter les *événements* d'une manière adaptée des **diagramme de séquence UML**[^4]. Voici le schéma complet pour le fonctionnement que j'ai décrit durant ce chapitre.
 
 ![Séquence d'ajout d'une action groupée dans le panneau d'adminsitration WordPress](ipi-memoire-images/hooks-002_uml_sequence.png)
 
@@ -193,4 +189,12 @@ Dans le diagramme ci-dessus[^5], une *redirection* (circuit orange) pouvait emp�
 
 [^4]: Utiliser les conventions de l'UML telle quelles n'est pas possible, car l'UML suppose que le code est **strictement** orienté objet, ce qui n'est pas le cas de *WordPress*, ni de *Polylang* par effet de bord. 
 
-[^5]: Ce diagramme est simplifié pour exposer le problème. Afin d'avoir mis le doigt sur ses causes, il a fallu explorer une plus grande partie du code. Ce schéma complet garde sa valeur pour réfléchir aux futures évolutions du programme, ou résoudre d'autres erreurs!
+[^5]: Ce diagramme est simplifié pour exposer le problème. Afin de d'identifier les causes, il a fallu explorer une plus grande partie du code. Ce schéma complet garde sa valeur pour réfléchir aux futures évolutions du programme, ou résoudre d'autres erreurs!
+
+## En conclusion
+
+L'étude de l'*API des hooks de WordPress* m'a permis de comprendre une manière dont une solution logicielle spécifique peut être encapsulée dans un CMS généraliste comme *WordPress*. C'est un mécanisme qui a du sens pour un outil très utilisé qui bénéficie pleinement d'un *écosystème* riches d'extensions et de développeurs spécialisés. Ce mécanisme permet à cette *communauté* de produire des exécutables profitant pleinement des *fonctionnalités déjà implémentées*.
+
+La formalisation de ce système selon la *norme UML* m'a permis de mettre en place une méthode d'analyse et de communication des fonctionnement actuels et des résultats attendus de l'application en développement. J'estime ainsi avoir mis à profit le temps, de toutes façons nécessaire, à la lecture du code existant, afin de produire un document qui a de la *valeur* pour mon équipe.
+
+Le mode de conception dit *architecture orientée événements* m'intéresse comme sujet de recherches futures. En comprendre les tenants et les aboutissants pourrait m'être bénéfique dans l'intégration de solutions futures au sein du système mis en place par *WordPress*. 
