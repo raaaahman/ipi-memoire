@@ -73,6 +73,7 @@ Ce terme désigne un *réseau* mondial permettant la communication entre différ
 - **Portée** : Désigne le contexte dans lequel une *variable* ou toute autre *structure de données* est accessible lors de l'exécution d'un programme. On désigne deux types de **portées**:
 	+ La portée **globale** : Accessible à toutes les parties du programme.
 	+ Les portées **locales** : La *structure de données* n'existe que dans une sous-partie en question. Il peut s'agit d'un module, d'une *fonction*, d'un *bloc conditionnel*,etc.
+- **Refactoring** : Action de modifier le *code d'un programme* dans un but organisationnel, sans changer les *fonctionnalités de l'application* en question.
 - **Règle métier** : Dans un *programme*, il s'agit de la partie responsable des traitements effectués sur les *données*. Exemple: le calcul de la *TVA* dans un logiciel de comptabilité.
 - **Régression** : Au cours du développement, désigne le fait d'introduire une nouvelle *erreur* dans une partie existante d'une *application*.
 - **Stateless** : Un langage *sans état (stateless)* ne conserve pas de données entre deux *exécutions* d'un même programme.

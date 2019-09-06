@@ -9,7 +9,7 @@ Le panneau d'administration de *WordPress* permet aux utilisateurs de réaliser 
 
 ![L'action groupée de traduction](ipi-memoire-images/bulk-refactor-000_edit-post.png)
 
-Conformément à la philosophie générale de l'extension, la conception de ce module s'est voulue coller au plus près du fonctionnement de *WordPress*, réutilisant en grande partie le code existant. 
+Conformément à la philosophie générale de l'extension, la conception de ce module s'est voulue coller au plus près au fonctionnement de *WordPress*, réutilisant en grande partie le code existant. 
 
 Notre nouvelle fonctionnalité consistant à exporter de manière groupée des *contenus* pour la traduction, il est apparu de bon ton de reprendre ce système et de l'étendre plutôt que d'en créer un nouveau.
 
@@ -17,7 +17,7 @@ Notre nouvelle fonctionnalité consistant à exporter de manière groupée des *
 
 Pour ses développements, *Polylang* adopte le *paradigme* de la *Programmation Orientée Objet*. Le code de l'*extension* est donc subdivisé en différentes *classes* ayant chacune des responsabilités propres.
 
-Pour ce module, une seule classe est responsable de l'ensemble des fonctionnalité. Il s'agit de la classe `PLL_Bulk_Translate`, qui définit les méthodes suivantes :
+Pour ce module, une seule classe est responsable de l'ensemble des fonctionnalités. Il s'agit de la classe `PLL_Bulk_Translate`, qui définit les méthodes suivantes :
 
 - `init` : Enregistre les *actions* et les *filtres*
 - `add_bulk_action` : Ajoute l'action "Translate" dans la liste des *action groupées*
@@ -26,7 +26,7 @@ Pour ce module, une seule classe est responsable de l'ensemble des fonctionnalit
 - `display_form` : Affiche le formulaire pour paramétrer l'*action groupée*.
 - `admin_notices` : Affiche les notifications pour informer l'utilisateur du résultat de l'*action groupée*.
 
-Dans cette classe, c'est la méthode `translate()` qui a la charge d'exécuter les *règles métier*, utilisant des *conditions* pour trouver la règle adaptée à la situation. L'exemple ci-dessous montre le code qui effectue la traduction d'un contenu de type *article* (post).
+Dans cette classe, c'est la méthode `translate()` qui a la charge d'exécuter les *règles métier*, utilisant des *conditions* pour trouver la règle adaptée à la situation. L'exemple ci-dessous montre le code qui effectue la traduction d'un contenu de type "article" (post).
 
 	if ( ! empty( $data['pll-translate-lang'] ) ) {
 		// Posts
@@ -52,7 +52,7 @@ Dans cette classe, c'est la méthode `translate()` qui a la charge d'exécuter l
 
 On observe, au sein de la boucle qui itère sur les identifiants d'articles la condition `if ( 'sync' !== $data['translate'] )` vérifiant si le choix de l'action de traduction groupée par l'utilisateur correspond à la synchronisation d'un article ou à sa duplication.
 
-Egalement, on trouve plus loin un bloc similaire pour la duplication des contenus de type *media*. Leur principale différence étant le tableau dans lequel la fonction va chercher les identifiants des *contenus* à traduire.
+Également, on trouve plus loin un bloc similaire pour la duplication des contenus de type *media*. Leur principale différence étant le tableau dans lequel la fonction va chercher les identifiants des *contenus* à traduire.
 
 	// Medias
 	if ( ! empty( $data['media'] ) ) {
@@ -73,9 +73,9 @@ Egalement, on trouve plus loin un bloc similaire pour la duplication des contenu
 
 Utiliser le code tel quel présente certains inconvénients. D'abord, il est **difficile à réutiliser** : pour ajouter une *action groupée*, il faut modifier l'intérieur de la méthode `translate()`. Cela risque à terme de créer une fonction contenant beaucoup de code dont seule une petite partie est exécutée à chaque appel. Cela peut créer de la confusion pour la maintenance ou les évolutions futures.
 
-Ce code est également **fortement couplé** : pour appeler des méthodes d'autres modules de *Polylang*, il faut ajouter des *références* à des *instances* d'autres classes dans au sein de l'instance de `PLL_Bulk_Translate`. De cette manière, les différentes *classes* se retrouvent intrinsèquement liées et l'on perd l'avantage d'avoir découpé le code en plusieurs classe dans un premier temps. 
+Ce code est également **fortement couplé** : pour appeler des méthodes d'autres modules de *Polylang*, il faut ajouter des *références* à des *instances* d'autres classes, au sein de l'instance de `PLL_Bulk_Translate`. De cette manière, les différentes *classes* se retrouvent intrinsèquement liées et l'on perd l'avantage d'avoir découpé le code en plusieurs classe dans un premier temps. 
 
-On souhaiterait à la place, pouvoir ajouter des *actions groupées* dans d'autres modules de *Polylang*, sans avoir à modifier celui-ci à chaque fois.
+On souhaite à la place, pouvoir ajouter des *actions groupées* dans d'autres modules de *Polylang*, sans avoir à modifier le module d'action groupée à chaque fois.
 
 ## Encapsuler du code réutilisable
 
@@ -85,12 +85,12 @@ La *composition* consiste à inclure au sein d'une *classe*, une ou plusieurs *p
 
 ![PLL_Bulk_Translate se compose d'une ou plusieurs PLL_Bulk_Translate_Option](ipi-memoire-images/bulk-refactor-001_composition.png)
 
-Ainsi, `PLL_Bulk_Translate` contient une *tableau* d'instances de `PLL_Bulk_Translate_Option`, chacune représentant une des *actions groupées* suivantes:
+Ainsi, `PLL_Bulk_Translate` contient un *tableau* d'instances de `PLL_Bulk_Translate_Option`, chacune représentant une des *actions groupées* suivantes:
 
 - Duplication d'articles
 - Synchronisation d'articles
 - Duplication de médias
-- **Export de fichiers de traduction** : la fonctionnalité que nous avons ajouté.
+- **Export de fichiers de traduction** (la fonctionnalité que l'on ajoute dans le projet)
 
 La *classe* `PLL_Bulk_Translate` conserve les responsabilités de vérification des *paramètres* passés lors du déclenchement de l'*action groupée*, ainsi que de l'affichage du formulaire. Dans cette *classe composée*, on peut alors utiliser le principe de *délégation* pour donner la responsabilité de la traduction des *contenus* à la classe `PLL_Bulk_Translate_Option`.
 
@@ -104,19 +104,19 @@ D'autre part, lorsque l'on affiche le formulaire servant à paramétrer l'*actio
 
 ### Le pattern "Strategy"
 
-On peut relever des similarités dans le comportement des différentes *action groupée* de traduction:
+On peut relever des similarités dans le comportement des différentes *actions groupées* de traduction:
 
 - On **itère** sur le tableau des identifiants des *contenus* à traduire.
 - Pour chaque *contenu*, on **vérifie** la pertinence d'en effectuer une traduction.
 - Selon le résultat de cette vérification, on **exécute l'action** sélectionnée.
 
-Evidemment, la logique d'**itération** est un point commun à toutes nos *actions groupées*, il y a peu de raison de réécrire le code s'en occupant à chaque fois que l'on veut rajouter une nouvelle action.
+Évidemment, la logique d'**itération** est un point commun à toutes nos *actions groupées*, il y a peu de raison de réécrire le code s'en occupant à chaque fois que l'on veut rajouter une nouvelle action.
 
-La **vérification** était commune aux actions disponibles avant le début du projet: il s'agissait alors de s'assurer que l'on écrasait pas un *contenu* déjà existant dans la base de données. Notre action d'*export groupé* n'a pas besoin de vérifier cela, car il ne s'agit pas d'écrire dans la base de données mais de générer un nouveau fichier. En revanche, il faut s'assurer que pour chaque *contenu* exporté, il n'y ai qu'une *traduction* de ce contenu qui soit envoyée en tant que source dans le fichier de traductions. Par exemple, on ne voudrait pas avoir à traduire une fois la page d'accueil depuis l'anglais, puis la traduire à nouveau depuis le français.
+La **vérification** était commune aux actions disponibles avant le début du projet: il s'agissait alors de s'assurer que l'on n'écrasait pas un *contenu* déjà existant dans la base de données. Notre action d'*export groupé* n'a pas besoin de vérifier cela, car il ne s'agit pas d'écrire dans la base de données mais de générer un nouveau fichier. En revanche, il faut s'assurer que pour chaque *contenu* exporté, il n'y ait qu'une *traduction* de ce contenu qui soit envoyée en tant que source dans le fichier de traductions. Par exemple, on ne voudrait pas avoir à traduire une fois la page d'accueil depuis l'anglais, puis la traduire à nouveau depuis le français.
 
 Pour l'**exécution** en question, il est évident qu'elle sera différente pour chacune des *actions de traduction groupée* disponibles.
 
-La *classe* `PLL_Bulk_Translate_Option` va donc elle même être composée afin de ne pouvoir changer que le code dont on a besoin: c'est le *design pattern* "Startegy". On défini alors deux *interfaces* pour les classes composantes, afin d'expliciter les *méthodes* minimales requises pour que l'on puisse créer différentes *classes* interchangeables.
+La *classe* `PLL_Bulk_Translate_Option` va donc elle même être composée afin de ne pouvoir changer que le code dont on a besoin: c'est le *design pattern* "Strategy". On défini alors deux *interfaces* pour les classes composantes, afin d'expliciter les *méthodes* minimales requises pour que l'on puisse créer différentes *classes* interchangeables.
 
 - `PLL_Bulk_Translate_Filter_Strategy` : Défini la méthode `filter` qui **vérifie** la pertinence d'exécuter l'action sur un *contenu*.
 - `PLL_Bulk_Translate_Translate_Strategy` : Défini la méthode `translate` qui **exécute** l'action sélectionnée sur un *contenu* à partir de son identifiant et de la langue vers laquelle on souhaite le dupliquer / synchroniser / exporter / etc.
@@ -148,11 +148,11 @@ Toutes les *classes* implémentant ces *interfaces* seront donc assignables par 
 
 ### Instance partagée et pattern "Singleton"
 
-Pour permettre aux différents modules de *Polylang* de s'interfacer avec, et d'utiliser ce mécanisme de traduction en masse, ils faut que ceux-ci puissent récupérer une *référence* à la classe `PLL_Bulk_Translate`. Plutôt que d'en créer une *instance* systématiquement et de chercher comment la récupérer, j'ai préféré *instancier* cette classe uniquement lorsque des actions de traductions groupées sont disponibles.
+Pour permettre aux différents modules de *Polylang* de s'interfacer avec, et d'utiliser ce mécanisme de traduction groupée, ils faut que ceux-ci puissent récupérer une *référence* à la classe `PLL_Bulk_Translate`. Plutôt que d'en créer une *instance* systématiquement et de chercher comment la récupérer, j'ai préféré *instancier* cette classe uniquement lorsque des actions de traductions groupées sont disponibles.
 
 ![Les modules peuvent passer des instances de PLL_Bulk_Translate_Option à la classe PLL_Bulk_Translate](ipi-memoire-images/bulk-refactor-004_dependency-inversion.png)
 
-L'enjeu est de n'avoir qu'une seule *instance* de la classe *PLL_Bulk_Translate* (ou aucune), contenant autant de `PLL_Bulk_Translate_Option` que le contexte requiert. C'est cette même instance qui doit être appelée depuis chaque module de *Polylang*. On se penche donc sur le *design pattern* "Singleton".
+L'enjeu est de n'avoir qu'une seule *instance* de la classe *PLL_Bulk_Translate* (ou aucune), contenant autant de `PLL_Bulk_Translate_Option` que le contexte requiert. C'est cette même instance qui doit être appelée depuis chaque module de *Polylang*. Le code suivant s'inspire donc du concept d'*instance partagée* du design pattern "Singleton".
 
 	class PLL_Bulk_Translate {
 		private $instance;
@@ -185,3 +185,11 @@ Une fois que l'on a récupéré (ou créé) l'unique *instance* de la *classe* `
 De cette manière, on s'assure d'enregistrer toutes nos *instances* de `PLL_Bulk_Translate_Option` dans le même *tableau* (qui est la propriété `$options` d'une unique instance de `PLL_Bulk_Translate`). Cela nous assure par la suite, lorsque l'on itère sur ce *tableau* d'obtenir toutes les *actions de traduction groupée* existantes, quel que soit le module de *Polylang* à laquelle elles appartiennent.
 
 [^1]: Le nom `PLL_Bulk_Translate_Option` vient de l'organisation de l'*interface utilisateur* des *actions groupées* de *WordPress*. En effet, l'utilisateur aura d'abord à choisir dans un menu déroulant l'action groupée nommée "Translate", ce qui lui ouvrira un menu avec un choix entre la duplication, la synchronisation ou l'export des contenus; d'où le terme d'"option".
+
+## En conclusion
+
+Bien que présentée en amont, cette étape de *refactoring* du code existant a fait suite à une constatation de au cours du développement du projet. Mon intérêt pour l'étude des solutions d'architecture des applications, notamment celles basées sur la *programmation orientée objet* et ses pratiques recommandées par les experts, comme les *design patterns*, m'a poussé à proposer de prendre en charge cette tâche.
+
+Mes efforts se sont concentrés sur l'analyse de similarités dans la structure du code afin d'en des **sous-ensembles réutilisables**. J'espère que par l'utilisation de structures conventionnées, en avoir faciliter les évolutions futures, que ce soit par moi ou par mon équipe.
+
+Cependant, c'est un travail qui m'a demandé beaucoup de temps et les bénéfices pour l'avenir de l'application sont difficile à mesurer. Aussi, je crains d'être allé trop loin dans l'application de schémas généralistes. D'autant que, malgré les *revues de code* régulières organisées avec mon équipe, j'ai constaté que cette manière de programmer n'était pas ancrée dans les habitudes de mes collègues. Il se pourrait bien que nous ayons à effectuer, dans les mois qui suivent, un **travail de communication** afin d'harmoniser les manières de programmer de chacun d'entre nous.
