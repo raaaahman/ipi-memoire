@@ -137,12 +137,13 @@ La *Programmation Orientée Objet* est un *paradigme* de programmation popularis
 ## Agilité & framework SCRUM
 
 **Agilité / méthodes agiles** : Principes de gestion de projet mettant en avant un processus de conception itératif, permettant d'adapter la production à un besoin utilisateur changeant, sur lequel l'équipe de développement a des retours fréquent par la livraison d'incréments pouvant être testé par ledit utilisateur.
+- **Code review (revue de code)** : Moment durant lequel les développeurs présentent leur travail aux autres développeurs du projet. Cela permet de s'accorder sur les conventions d'écriture du code et d'améliorer la compréhension du fonctionnement du projet pour l'équipe dans son ensemble.
 **SCRUM** : Cadre de travail inspiré de l'*agilité*, définissant un certains nombre de pratiques à mettre en place au sein de l'équipe du projet. La liste suivante en présente une partie non exhaustive.
 - **User story** : Décrit succinctement une *feature* à réaliser pour l'*application*, basé sur un besoin de l'utilisateur.
 - **Itération** : Organisation du travail en cycles, impliquant une régularité des événements de début et fin de cycle (notamment les réunions), ainsi que la production d'*incréments*
 - **Sprint** : *Itération* de développement, généralement comprise entre 1 semaine et 1 mois de travail. livrables à un client.
 - **Incrément** : Version non définitive d'une *application* en cours de production.
-- **Daily meeting**: Réunion quotidienne de l'équipe de développement permettant de recueillir l'humeur générale et de partager les avancées ou les blocages du quotidien
+- **Daily meeting**: Réunion quotidienne de l'équipe de développement permettant de recueillir l'humeur générale et de partager les avancées ou les blocages concernant le projet en cours.
 - **Pair programming** : Deux développeurs travaillent ensemble sur un même ordinateur, partageant leurs réflexions à chaud. Il est recommandé que la personne ayant la main sur le clavier change au cours de la session.
 
 

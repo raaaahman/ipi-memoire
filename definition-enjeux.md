@@ -1,8 +1,6 @@
-# Projet de fonctionnalité : l'export de traductions
+# Ajout d'une fonctionnalité : l'export de traductions
 
-Le projet présenté est un module de l'application *Polylang*. Son but est de gérer l'import, comme l'export, de fichiers de traduction.
-
-Les données seront alors transformées de fichiers aux formats *XLIFF* ou *PO*, en entrées de base de données *MySQL*, et inversement.
+Le projet présenté dans ce rapport est un module de l'application *Polylang*. Son but est de gérer l'import, comme l'export, de fichiers de traduction. Les données seront alors transformées de fichiers aux formats *XLIFF* ou *PO*, en entrées de base de données *MySQL*, et inversement. Ce chapitre reprend les éléments discutés durant la *réunion d'avant-projet* le concernant.
 
 ## Un besoin exprimé par les clients
 
@@ -34,7 +32,7 @@ Au niveau technique :
 - Les **métadonnées** pouvant être associées à plusieurs contenus, elles ne doivent pas être traduites à nouveau à chaque traduction d'un de ces contenus.
 - Lors de l'import, des traductions pourraient entrer en conflit avec celles pré-existantes sur le **site** de l'utilisateur, il faudra trouver un moyen de gérer les ambiguïtés.
 - Les imports comme les exports devront prendre en compte la fonctionnalité de synchronisation, des **contenus** comme des **métadonnées**, existante au sein de l'application *Polylang*.
-- Le système de traduction des **chaînes de caractère** isolées diffère de celui des *contenus* de par leur modèle de **persistance** (stockées dans des *fichiers* et non en *base de données*).
+- Le système de traduction des **chaînes de caractère** diffère de celui des *contenus* de par leur modèle de **persistance** (stockées dans des *fichiers* et non en *base de données*).
 
 ## Organiser la collaboration
 
@@ -45,8 +43,8 @@ Ainsi, une partie de la réunion a porté sur le choix des outils de collaborati
 - *Skype* : Logiciel de messagerie instantanée permettant la communication quotidienne de l'équipe.
 - *appear.in* : Application web de visio-conférence pour les réunions d'équipe.
 - *Git* : Outil de **gestion des versions** du code source.
-- *GitHub* : Outil de partage du **code source** et de la **documentation** technique.
-- *Trello* : Sa flexibilité nous permet de l'utiliser à la fois comme tableau de gestion des tâches et comme centre de partage de documentation.
+- *GitHub* : Site web de partage du **code source** basé sur l'outil *Git*. Sert également d'outil de **rapport des erreurs**.
+- *Trello* : Sa flexibilité nous permet de l'utiliser à la fois comme tableau de **gestion des tâches** et comme centre de partage de **documentation externe** (liens vers les articles et tutoriels).
 
 ![Trello, dédié à la gestion des tâches.](../img/spec-010_trello.png)
 
@@ -64,17 +62,21 @@ Le projet étant une nouvelle fonctionnalité pour l'extension *Polylang* du *CM
 
 - **PHP** (compatibilité avec la version 5.6) : Langage de scripts *interprété*, sans état (*stateless*) et *dynamiquement typé*.
 - **HTML/CSS** : Pour l'*interface utilisateur*.
-- **Javascript/jQuery** : Pour quelques scripts *côté client*, permettant notamment l'appel de *scripts* *côté serveur* en *AJAX*.
+- **Javascript/jQuery** : Pour quelques scripts *côté client*, permettant notamment l'appel de *scripts côté serveur* par le biais de l'*AJAX*.
 - **MySQL 5.7** : *Base de données* comprenant son propre *langage de requête* basé sur le langage *SQL* et l'étendant. La version 5.7 est la dernière version *open source* du logiciel avant son rachat par la société *Oracle*.
 
 D'autres ont été choisies par l'équipe:
 
-- **PHPUnit** : *Framework* de *tests automatisés*.
-- **XLIFF** : Format de *fichiers* basé sur la *syntaxe* du format *XML*. C'est un format très couramment utilisé par les *TMS* (Translation Management System).
-- **Helpscout** : *Application* web de gestion des tickets de support, permet à l'équipe de suivre et résoudre les problèmes rencontrés par les utilisateurs.
+- **PHPUnit** : *Framework de tests automatisés*.
+- **XLIFF** : *Format de fichiers* dérivé du format *XML*. C'est un format très couramment utilisé par les *TMS* (Translation Management System).
+- **Helpscout** : *Application web* de gestion des tickets de support, permet à l'équipe de suivre et résoudre les problèmes rencontrés par les utilisateurs.
 
 Finalement, les environnement de développement peuvent varier selon les développeurs. Le mien utilise les technologies suivantes:
 
 - **Linux** : *Système d'exploitation* *open source*. Il est aujourd'hui l'*OS* très largement majoritaire dans les *serveurs webs*.
-- **Apache (HTTP Server)** : *Logiciel* permettant l'interprétation de *requêtes HTTP* ainsi que la génération des *réponses*.
+- **Apache (HTTP Server)** : *Logiciel* permettant l'interprétation de *requêtes HTTP* ainsi que la génération de *réponses*.
 - **PHP Storm** : *IDE* dédié au développement en *PHP*.
+
+## En conclusion
+
+Cette réunion a été un moment important pour l'équipe car ce projet a coïncidé avec l'intégration d'une nouvelle employée. Il est également le premier projet qui ne sera pas confié à la responsabilité d'une seule personne. Cette réunion a donc été le point de départ de discussions portant sur les méthodologies de travail en groupe.
