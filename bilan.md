@@ -1,0 +1,35 @@
+# Bilan de compétences
+
+## Architecturer et sécuriser une application logicielle
+
+Être présent au début du projet de l'import/export de traduction a été une bonne occasion pour apprendre à formaliser un besoin. Cette manière de concevoir un produit plutôt qu'une prestation sur-mesure, est nouvelle pour moi. J'ai pu observer le genre de questions que l'on peut se poser dans cette situation, notamment celle de la *veille concurrentielle*. Bien que peu abordée durant ce rapport, il est courant dans mon travail quotidien d'aller étudier comment un concurrent implémente une fonctionnalité, ou comment il la présente à ses utilisateurs, et de comparer ces observations à nos besoins.
+
+Mon intérêt personnel pour l'architecture et la conception de programmes, notamment à travers la *programmation orientée objet* et les *design patterns*, m'a permis d'envisager les solutions que j'ai pu produire sous l'angle de la pérennité. Son expression sous formes de *diagrammes UML* m'a permis d'archiver et d'organiser des documents relatant cette conception.
+
+La sécurité des échanges de données a été peu abordée dans le présent rapport, en raison de la manière dont les outils que j'ai utilisé en ont déjà réalisé les traitements, au niveau de sécurité nous étant nécessaire. Cela ne m'a pas empêché de m'informer sur les risques que présentent le téléchargement et le téléversement de *fichiers XML* au sein d'une application web. J'ai ainsi pu prendre connaissance de possibles attaques dites *path traversal* et *external entity injection*.
+
+## Audit, conception, méthode de projet
+
+Bien que travaillant tous à distance, les *revues de code* ont été de bonnes occasions pour mon équipe d'expliciter nos travaux respectif. Loin de créer une uniformité dans le code produit, nous avons pu toutefois nous assurer de la compatibilité de nos travaux, et nous assurer qu'un module produit par un développeur est utilisable par d'autres.
+
+Lors de mon travail d'ajout de fonctionnalité, j'ai pu analyser le fonctionnement interne de l'extension *Polylang*. J'ai utilisé ces nouvelles connaissance afin d'être force de proposition dans la ré-organisation du code existant, afin de faciliter les éventuelles évolutions. Si j'ai pu m'atteler à l'une de ces propositions (cf. le chapitre *Refactoring d'un module existant* de ce document), d'autres ont intéressé mon employeur, mais n'ont pas été jugées suffisamment prioritaires pour être traitées jusqu'alors.
+
+De par l'expérience limitée dont ma collègue Marianne et moi disposons, mon employeur n'a pas jugé pertinent de nous faire effectuer des *estimations de délais* pour la réalisation de cette solution. Nous avons tout de même essayé de prévoir le temps nécessaires pour la réalisations de tâches précises, afin de pouvoir nous répartir équitablement le travail à réaliser. Bien qu'en bonne voie, le projet est, à l'heure où j'écris ces lignes, toujours en développement.
+
+## Réaliser des solutions logicielles
+
+Produire une extension pour un CMS populaire comme *WordPress* m'a confronté à une certaine rigidité dans les solutions potentielles, tout en fournissant des outils permettant d'accélérer le développement. C'est une approche qui m'a fait questionner la manière de produire du code, en plus de l'objectif que ce code doit remplir. J'ai ainsi pris l'habitude de formater mon code selon les *WordPress Coding Standards*, qui sont une convention largement partagée à travers la communauté mondiale.
+
+L'écriture de test automatisés pour les fonctionnalités développées est une pratique à laquelle j'accorde une grande importance. Son objectif principal est de s'assurer de la *non-régression* du programme au cours de ses évolutions, ce qui est en soi d'une grande valeur pour l'entreprise. Mais cette pratique apporte également des avantages supplémentaires, comme de forcer la réflexion sur la qualité du code ainsi testé. D'autre part, la pratique d'écrire des tests avant l'écriture du code (le *Test Driven Development*) m'a forcé à réfléchir aux objectifs et sources d'échecs potentiels du code avant de me lancer dans son écriture. 
+
+## Communiquer avec les acteurs du projet
+
+Notre équipe travaillant quotidiennement à distance, la question de la communication a été très rapidement abordée. Ma proposition d'instaurer un *daily meeting*, inspiré de la pratique *SCRUM*, a été accepté unanimement par l'équipe. Cette courte réunion quotidienne nous permet de renforcer le sentiment d'appartenance à l'équipe, tout en favorisant l'entraide et la résolution des blocages qui peuvent survenir dans notre travail quotidien. Les interventions de Christelle notamment, très en lien avec notre clientèle, nous permettent d'avoir une meilleure idée des attentes et habitudes des utilisateurs de notre application.
+
+Ces utilisateurs, nous avons également l'occasion d'en rencontrer en personne, lors des événements de la communauté *WordPress* que l'entreprise sponsorise. Par exemple le *WordCamp Europe 2019*, qui s'est déroulé à Berlin au mois de Juin, a réuni autour de 3200 personnes de toutes nationalités et ayant des utilisations variées de *WordPress* (développement d'extension, prestations de traduction, vente en ligne, etc.). Durant ce salon nous avons pu discuter (en anglais) avec autant d'acteurs qui ont pu nous partager leurs commentaires sur l'utilisation de notre produit, ainsi que de leurs attentes concernant son évolution.
+
+## Adapter l’environnement d’exécution, interfacer des applications numériques
+
+Le travail de développeur s'accommode de nombreuses tâches qui peuvent rapidement devenir répétitives. J'ai eu l'occasion d'apprendre à me servir d'outils pour faciliter ces tâches, ainsi qu'à configurer ces outils. L'environnement de tests automatisés proposé par la communauté *WordPress* est l'un de ces outils. L'interfacer avec notre projet en développement m'a demandé quelques essais, mais j'ai pu constater du gain de temps lié à son utilisation. L'installation de l'outil de vérification des *WordPress Coding Standards*, une fois correctement connecté à mon IDE m'a aidé à respecter les conventions d'écriture de code que nous partageons dans mon entreprise.
+
+J'ai également essayé de configurer un environnement de développement portable grâce à la technologie des *containers Docker*. N'ayant pas encore abouti à une version utilisable par mes collaborateurs, je n'en ai pas fait l'exposition durant ce rapport, et continue à me former sur l'outil. Cet environnement portable devrait nous permettre une meilleure gestion des mises à jour des outils que nous utilisons communément. Dans un second temps, il pourrait également nous permettre de générer, à la volée, des environnements de test de notre application en faisant varier les versions de ses dépendances (serveur HTTP, langage PHP, base de données relationnelle). Ce qui nous permettrait de nous assurer de sa bonne compatibilité avec les différents environnements dont peuvent disposer nos clients.
